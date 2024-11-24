@@ -171,7 +171,7 @@ export const Map = ({ hideComponents }) => {
 
     try {
       // Upload file
-      const uploadResponse = await fetch("http://localhost:8000/upload", {
+      const uploadResponse = await fetch("http://35.209.156.52:8000/upload", {
         method: "POST",
         body: formData,
       });
@@ -183,7 +183,7 @@ export const Map = ({ hideComponents }) => {
       // Handle zipped shapefile
       if (file.name.endsWith(".zip")) {
         const dataResponse = await fetch(
-          `http://localhost:8000/data/${tableName}`
+          `http://35.209.156.52:8000/data/${tableName}`
         );
         if (!dataResponse.ok) {
           throw new Error("Failed to fetch shapefile data");
@@ -213,7 +213,7 @@ export const Map = ({ hideComponents }) => {
       // Handle raster file
       else if (file.name.endsWith(".tif") || file.name.endsWith(".tiff")) {
         const dataResponse = await fetch(
-          `http://localhost:8000/raster/${tableName}`
+          `http://35.209.156.52:8000/raster/${tableName}`
         );
         if (!dataResponse.ok) {
           throw new Error("Failed to fetch raster data");
@@ -252,7 +252,7 @@ export const Map = ({ hideComponents }) => {
       // Handle geojson file
       else if (file.name.endsWith(".geojson")) {
         const dataResponse = await fetch(
-          `http://localhost:8000/geojson/${tableName}`
+          `http://35.209.156.52:8000/geojson/${tableName}`
         );
         if (!dataResponse.ok) {
           throw new Error(
@@ -297,7 +297,7 @@ export const Map = ({ hideComponents }) => {
   //   const fetchRaster = async () => {
   //     try {
   //       const response = await fetch(
-  //         `http://localhost:8000/raster/image_export_mchange_geometrybauksit`
+  //         `http://35.209.156.52:8000/raster/image_export_mchange_geometrybauksit`
   //       );
   //       if (!response.ok) {
   //         throw new Error("Failed to fetch raster data");
@@ -353,7 +353,7 @@ export const Map = ({ hideComponents }) => {
     const fetchRaster = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8000/raster/`
+          `http://35.209.156.52:8000/raster/`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch raster data");
