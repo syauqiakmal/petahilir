@@ -1,48 +1,35 @@
-version: '3.8'
+version: "3.8"
 
 services:
-  db:
-    image: postgis/postgis:15-3.3
-    container_name: postgis
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 15032003
-      POSTGRES_DB: nyoba
+  frontend:
+    build:
+      context: ./react-appi  # Set the context to the frontend directory
+      dockerfile: Dockerfile 
     ports:
-      - "5432:5432"
-    volumes:
-      - postgis_data:/var/lib/postgresql/data
+      - "3000:3000"
+    depends_on:
+      - backend
     networks:
       - app-network
 
   backend:
     build:
-      context: ./backend
+      context: ./Backend
       dockerfile: Dockerfile
-    container_name: fastapi
-    environment:
-      - DATABASE_URL=postgresql://postgres:edo@db:5432/tangerangadm
     ports:
       - "8000:8000"
-    depends_on:
-      - db
+    environment:
+      - GDAL_CONFIG=/usr/bin/gdal-config
+      - DB_HOST=10.238.0.3         # External PostgreSQL IP address
+      - DB_PORT=5432              # PostgreSQL port
+      - DB_NAME=nyoba             # Database name
+      - DB_USER=postgres          # Database username
+      - DB_PASSWORD=15032003      # Database password
+    networks:
+      - app-network
     volumes:
-      - ./backend:/app
-    networks:
-      - app-network
-
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    container_name: react-app
-    ports:
-      - "3000:3000"
-    networks:
-      - app-network
-
-volumes:
-  postgis_data:
+      - ./Backend:/Backend  # Optional: map local folder to container folder for local dev
+    command: ["python", "main.py"]
 
 networks:
   app-network:
