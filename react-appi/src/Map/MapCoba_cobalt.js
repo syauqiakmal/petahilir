@@ -329,59 +329,59 @@ export const Mapi = ({ hideComponents }) => {
 
   
 
-  useEffect(() => {
-    const fetchRaster = async () => {
-      try {
-        const response = await fetch(
-          `http://localhost:8000/raster/image_export_mchange_geometrybauksit`
-        );
-        if (!response.ok) {
-          throw new Error("Failed to fetch raster data");
-        }
+  // useEffect(() => {
+  //   const fetchRaster = async () => {
+  //     try {
+  //       const response = await fetch(
+  //         `http://localhost:8000/raster/image_export_mchange_geometrybauksit`
+  //       );
+  //       if (!response.ok) {
+  //         throw new Error("Failed to fetch raster data");
+  //       }
   
-        const rasterResponse = await response.json();
+  //       const rasterResponse = await response.json();
   
-        const newUploadedFile = {
-          name: "Perubahan Wilayah Pertambangan Bauksit Tahun 2000-2020",
-          data: rasterResponse.raster_images, // Base64 images
-          checked: true,
-          bounds: rasterResponse.bounds, // Bounding box
-        };
+  //       const newUploadedFile = {
+  //         name: "Perubahan Wilayah Pertambangan Bauksit Tahun 2000-2020",
+  //         data: rasterResponse.raster_images, // Base64 images
+  //         checked: true,
+  //         bounds: rasterResponse.bounds, // Bounding box
+  //       };
   
-        // Update state with new file and raster data
-        setUploadedFiles((prevUploadedFiles) => [
-          ...prevUploadedFiles,
-          newUploadedFile,
-        ]);
+  //       // Update state with new file and raster data
+  //       setUploadedFiles((prevUploadedFiles) => [
+  //         ...prevUploadedFiles,
+  //         newUploadedFile,
+  //       ]);
   
-        // Update rasterData state by appending new raster images
-        setRasterData((prevRasterData) => [
-          ...(prevRasterData || []),
-          ...rasterResponse.raster_images,
-        ]);
+  //       // Update rasterData state by appending new raster images
+  //       setRasterData((prevRasterData) => [
+  //         ...(prevRasterData || []),
+  //         ...rasterResponse.raster_images,
+  //       ]);
   
-        // Update bounds state based on new raster bounds
-        const updatedBounds = L.latLngBounds(rasterResponse.bounds);
-        setBounds((prevBounds) =>
-          prevBounds ? prevBounds.extend(updatedBounds) : updatedBounds
-        );
+  //       // Update bounds state based on new raster bounds
+  //       const updatedBounds = L.latLngBounds(rasterResponse.bounds);
+  //       setBounds((prevBounds) =>
+  //         prevBounds ? prevBounds.extend(updatedBounds) : updatedBounds
+  //       );
   
-        // Automatically zoom to the new bounds with closer zoom
-        if (mapRef.current) {
-          mapRef.current.fitBounds(updatedBounds, { 
-            maxZoom: 20, // Set maximum zoom level for closer zoom
-          });
-        }
+  //       // Automatically zoom to the new bounds with closer zoom
+  //       if (mapRef.current) {
+  //         mapRef.current.fitBounds(updatedBounds, { 
+  //           maxZoom: 20, // Set maximum zoom level for closer zoom
+  //         });
+  //       }
   
-        setIsNewUpload(true);
-      } catch (error) {
-        console.error("Error fetching raster:", error.message);
-        // Optionally show error to the user here, e.g., via a toast notification
-      }
-    };
+  //       setIsNewUpload(true);
+  //     } catch (error) {
+  //       console.error("Error fetching raster:", error.message);
+  //       // Optionally show error to the user here, e.g., via a toast notification
+  //     }
+  //   };
   
-    fetchRaster();
-  }, []);
+  //   fetchRaster();
+  // }, []);
   
  
 
