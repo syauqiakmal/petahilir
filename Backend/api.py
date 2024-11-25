@@ -653,8 +653,23 @@ async def get_raster():
         print("Error:", e)
         raise HTTPException(status_code=500, detail="Internal Server Error")
 
-    
-    
+@app.get("/verify-db-connection")
+async def verify_db_connection():
+    try:
+        # Attempt to connect to the database
+        conn = psycopg2.connect(
+            host="10.238.0.3",
+            port="5432",
+            dbname="nyoba",
+            user="postgres",
+            password="15032003"
+        )
+        conn.close()
+        return {"message": "Database connection successful"}
+    except Exception as e:
+        print("Database connection error:", e)
+        raise HTTPException(status_code=500, detail="Failed to connect to the database")
+
 # from torch.utils.data import Dataset, DataLoader
 # from torchvision import transforms
 # from PIL import Image
