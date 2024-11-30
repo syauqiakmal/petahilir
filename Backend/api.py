@@ -592,20 +592,92 @@ async def get_geojson(table_name: str):
         raise HTTPException(status_code=500, detail=error_message)
     
     
-@app.get("/raster/")
-async def get_raster():
+    
+@app.get("/raster1/")
+async def get_raster1():
+    return await process_raster_file(r"data/image_export_mchange_geometrynikel.tiff")
+
+@app.get("/rasterNikelA/")
+async def get_raster1():
+    return await process_raster_file(r"data/image_export_m00_geometrynikel.tif")
+
+@app.get("/rasterNikelB/")
+async def get_raster1():
+    return await process_raster_file(r"data/image_export_m05_geometrynikel.tif")
+
+@app.get("/rasterNikelC/")
+async def get_raster1():
+    return await process_raster_file(r"data/image_export_m10_geometrynikel.tif")
+
+@app.get("/rasterNikelD/")
+async def get_raster1():
+    return await process_raster_file(r"data/image_export_m15_geometrynikel.tif")
+@app.get("/rasterNikelE/")
+async def get_raster1():
+    return await process_raster_file(r"data/image_export_m20_geometrynikel.tif")
+
+
+
+
+@app.get("/raster2/")
+async def get_raster1():
+    return await process_raster_file(r"data/image_export_mchange_geometrykuarsa.tif")
+
+
+@app.get("/rasterkuarsaA/")
+async def get_raster1():
+    return await process_raster_file(r"data/image_export_m00_geometrykuarsa.tif")
+
+@app.get("/rasterkuarsaB/")
+async def get_raster1():
+    return await process_raster_file(r"data/image_export_m05_geometrykuarsa.tif")
+
+@app.get("/rasterkuarsaC/")
+async def get_raster1():
+    return await process_raster_file(r"data/image_export_m10_geometrykuarsa.tif")
+
+@app.get("/rasterkuarsaD/")
+async def get_raster1():
+    return await process_raster_file(r"data/image_export_m15_geometrykuarsa.tif")
+@app.get("/rasterkuarsaE/")
+async def get_raster1():
+    return await process_raster_file(r"data/image_export_m20_geometrykuarsa.tif")
+
+
+
+@app.get("/raster3/")
+async def get_raster1():
+    return await process_raster_file(r"data/image_export_mchange_geometrybauksit.tif")
+
+@app.get("/rasterbauksitA/")
+async def get_raster1():
+    return await process_raster_file(r"data/image_export_m00_geometrybauksit.tif")
+
+@app.get("/rasterbauksitB/")
+async def get_raster1():
+    return await process_raster_file(r"data/image_export_m05_geometrybauksit.tif")
+
+@app.get("/rasterbauksitC/")
+async def get_raster1():
+    return await process_raster_file(r"data/image_export_m10_geometrybauksit.tif")
+
+@app.get("/rasterbauksitD/")
+async def get_raster1():
+    return await process_raster_file(r"data/image_export_m15_geometrybauksit.tif")
+@app.get("/rasterbauksitE/")
+async def get_raster1():
+    return await process_raster_file(r"data/image_export_m20_geometrybauksit.tif")
+
+ 
+ 
+ 
+async def process_raster_file(file_path: str):
     raster_images = []
     converted_bounds = []
-
     try:
-        # Path to local raster file
-        file_path = os.path.abspath(r"data/image_export_mchange_geometrynikel.tiff")
-        print("File path:", file_path)
-
         if not os.path.isfile(file_path):
-            raise HTTPException(status_code=404, detail="Raster file not found.")
+            raise HTTPException(status_code=404, detail=f"Raster file not found: {file_path}")
 
-        # Open the raster file
         with rasterio.open(file_path) as dataset:
             data = dataset.read()
             if data is None or data.shape[0] == 0:
@@ -669,6 +741,69 @@ async def verify_db_connection():
     except Exception as e:
         print("Database connection error:", e)
         raise HTTPException(status_code=500, detail="Failed to connect to the database")
+    
+# @app.get("/raster/")
+# async def get_raster():
+#     raster_images = []
+#     converted_bounds = []
+
+#     try:
+#         # Path to local raster file
+#         file_path = os.path.abspath(r"data/image_export_mchange_geometrynikel.tiff")
+#         print("File path:", file_path)
+
+#         if not os.path.isfile(file_path):
+#             raise HTTPException(status_code=404, detail="Raster file not found.")
+
+#         # Open the raster file
+#         with rasterio.open(file_path) as dataset:
+#             data = dataset.read()
+#             if data is None or data.shape[0] == 0:
+#                 raise HTTPException(status_code=404, detail="Invalid or empty raster file.")
+
+#             # Handle single-band or multi-band images
+#             num_bands = data.shape[0]
+#               # Example colormap
+            
+#             if num_bands == 1:
+#                 band_normalized = (data[0] - data[0].min()) / (data[0].max() - data[0].min())
+#                 rgba_image = cmap(band_normalized)  # Apply colormap
+#                 rgb_image = (rgba_image[:, :, :3] * 255).astype('uint8')  # Convert to RGB
+#                 image = Image.fromarray(rgb_image)
+#             else:
+#                 bands = [(band - band.min()) / (band.max() - band.min()) * 255 for band in data[:3]]
+#                 bands = [Image.fromarray(b.astype('uint8')) for b in bands]
+#                 image = Image.merge('RGB', bands[:3])
+
+#             # Save image to byte array
+#             img_byte_array = BytesIO()
+#             image.save(img_byte_array, format='PNG')
+#             raster_images.append(img_byte_array.getvalue())
+
+#             # Extract bounding box from the raster
+#             bbox = dataset.bounds
+#             bounds = [[bbox.left, bbox.bottom], [bbox.right, bbox.top]]
+
+#             # CRS Transformation (if needed)
+#             transformer = Transformer.from_crs("epsg:4326", "epsg:4326", always_xy=True)
+#             converted_bounds = [transformer.transform(*coord) for coord in bounds]
+#             converted_bounds = [
+#                 [converted_bounds[0][1], converted_bounds[0][0]],
+#                 [converted_bounds[1][1], converted_bounds[1][0]]
+#             ]
+
+#         # Encode image in base64
+#         encoded_image = base64.b64encode(img_byte_array.getvalue()).decode()
+
+#         return JSONResponse(content={"raster_images": [encoded_image], "bounds": converted_bounds})
+
+#     except HTTPException as e:
+#         raise e
+#     except Exception as e:
+#         print("Error:", e)
+#         raise HTTPException(status_code=500, detail="Internal Server Error")
+
+
 
 # from torch.utils.data import Dataset, DataLoader
 # from torchvision import transforms

@@ -79,7 +79,69 @@ export const Map = ({ hideComponents }) => {
     // setIsContinentsVisible(!isContinentsVisible);
   };
 
-  const handleShowFile = (index, checked) => {
+
+
+  const handleRasterFile = (index, checked) => {
+    const map = mapRef.current;
+  
+    const updatedFiles = uploadedFiles.map((file, i) =>
+      i === index ? { ...file, checked } : file
+    );
+    setUploadedFiles(updatedFiles);
+  
+    const selectedRasterFiles = updatedFiles.filter(
+      (file) =>
+        file.checked &&
+        (file.name.endsWith(".tif") ||
+          file.name.endsWith(".tiff") ||
+          file.name.endsWith("2000-2020")||
+          file.name.endsWith("2000")||
+          file.name.endsWith("2005") ||
+          file.name.endsWith("2010")||
+          file.name.endsWith("2015")||
+          file.name.endsWith("2020")
+        )
+    );
+  
+    // Combine all raster data for rendering on map
+    const combinedRasterData = selectedRasterFiles.flatMap(
+      (file) => file.data.raster_images
+    );
+  
+    // Get bounds for the selected files
+    let selectedBounds = null;
+    if (selectedRasterFiles.length > 0) {
+      selectedRasterFiles.forEach((file) => {
+        if (file.data.bounds) {
+          const fileBounds = L.latLngBounds(file.data.bounds);
+          if (fileBounds.isValid()) {
+            if (selectedBounds) {
+              selectedBounds.extend(fileBounds);
+            } else {
+              selectedBounds = fileBounds;
+            }
+          }
+        }
+      });
+    }
+  
+    console.log("Selected Raster Files:", selectedRasterFiles);
+    console.log("Combined Raster Data:", combinedRasterData);
+    console.log("Selected Bounds:", selectedBounds);
+  
+    setRasterData(combinedRasterData.length > 0 ? combinedRasterData : null);
+    setBounds(
+      selectedBounds && selectedBounds.isValid() ? selectedBounds : null
+    );
+    setIsNewUpload(true); // Trigger map update
+  
+    // Fit map bounds with a maximum zoom level
+    if (selectedBounds && selectedBounds.isValid() && map) {
+      map.fitBounds(selectedBounds, { maxZoom: 20 }); // Set max zoom level
+    }
+  };
+
+    const handleShowFile = (index, checked) => {
     const updatedFiles = uploadedFiles.map((file, i) => {
       return i === index ? { ...file, checked } : file;
     });
@@ -97,52 +159,6 @@ export const Map = ({ hideComponents }) => {
 
     setGeojsonData(selectedFiles.length > 0 ? mergedGeojsonData : null);
   };
-
-  const handleRasterFile = (index, checked) => {
-    const updatedFiles = uploadedFiles.map((file, i) =>
-      i === index ? { ...file, checked } : file
-    );
-    setUploadedFiles(updatedFiles);
-
-    const selectedRasterFiles = updatedFiles.filter(
-      (file) =>
-        file.checked &&
-        (file.name.endsWith(".tif") || file.name.endsWith(".tiff"))
-    );
-
-    // Combine all raster data for rendering on map
-    const combinedRasterData = selectedRasterFiles.flatMap(
-      (file) => file.data.raster_images
-    );
-
-    // Get bounds for the selected files
-    let selectedBounds = null;
-    if (selectedRasterFiles.length > 0) {
-      selectedRasterFiles.forEach((file) => {
-        if (file.data.bounds) {
-          const fileBounds = L.latLngBounds(file.data.bounds);
-          if (fileBounds.isValid()) {
-            if (selectedBounds) {
-              selectedBounds.extend(fileBounds);
-            } else {
-              selectedBounds = fileBounds;
-            }
-          }
-        }
-      });
-    }
-
-    console.log("Selected Raster Files:", selectedRasterFiles);
-    console.log("Combined Raster Data:", combinedRasterData);
-    console.log("Selected Bounds:", selectedBounds);
-
-    setRasterData(combinedRasterData.length > 0 ? combinedRasterData : null);
-    setBounds(
-      selectedBounds && selectedBounds.isValid() ? selectedBounds : null
-    );
-    setIsNewUpload(true); // Trigger map update
-  };
-
   const handleColumnSelection = (fileIndex, column, isChecked) => {
     const updatedFiles = uploadedFiles.map((file, index) => {
       if (index === fileIndex) {
@@ -349,11 +365,67 @@ export const Map = ({ hideComponents }) => {
   
 
 
+  // useEffect(() => {
+  //   const fetchRaster = async () => {
+  //     try {
+  //       const response = await fetch(
+  //         `http://35.209.156.52:8000/raster/`
+  //       );
+  //       if (!response.ok) {
+  //         throw new Error("Failed to fetch raster data");
+  //       }
+  
+  //       const rasterResponse = await response.json();
+  //       console.log("Raster Response:", rasterResponse);
+        
+       
+  //       const newUploadedFile = {
+  //         name: "Perubahan Wilayah Pertambangan Nikel Tahun 2000-2020",
+  //         data: rasterResponse, // Base64 images
+  //         checked: true,
+  //         bounds: rasterResponse.bounds, // Bounding box
+  //       };
+  
+  //       // Update state with new file and raster data
+  //       setUploadedFiles((prevUploadedFiles) => [
+  //         ...prevUploadedFiles,
+  //         newUploadedFile,
+  //       ]);
+  
+  //       // Update rasterData state by appending new raster images
+  //       setRasterData((prevRasterData) => [
+  //         ...(prevRasterData || []),
+  //         ...rasterResponse.raster_images,
+  //       ]);
+  
+  //       // Update bounds state based on new raster bounds
+  //       const updatedBounds = L.latLngBounds(rasterResponse.bounds);
+  //       setBounds((prevBounds) =>
+  //         prevBounds ? prevBounds.extend(updatedBounds) : updatedBounds
+  //       );
+  
+  //       // Automatically zoom to the new bounds with closer zoom
+  //       if (mapRef.current) {
+  //         mapRef.current.fitBounds(updatedBounds, { 
+  //           maxZoom: 45, // Set maximum zoom level for closer zoom
+  //         });
+  //       }
+  
+  //       setIsNewUpload(true);
+  //     } catch (error) {
+  //       console.error("Error fetching raster:", error.message);
+  //       // Optionally show error to the user here, e.g., via a toast notification
+  //     }
+  //   };
+  
+  //   fetchRaster();
+  // }, []);
+
   useEffect(() => {
     const fetchRaster = async () => {
       try {
         const response = await fetch(
-          `http://35.209.156.52:8000/raster/`
+          `http://localhost:8000/raster1/`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch raster data");
@@ -382,19 +454,16 @@ export const Map = ({ hideComponents }) => {
           ...rasterResponse.raster_images,
         ]);
   
-        // Update bounds state based on new raster bounds
-        const updatedBounds = L.latLngBounds(rasterResponse.bounds);
         setBounds((prevBounds) =>
-          prevBounds ? prevBounds.extend(updatedBounds) : updatedBounds
+          prevBounds
+            ? prevBounds.extend(L.latLngBounds(rasterResponse.bounds))
+            : L.latLngBounds(rasterResponse.bounds)
         );
   
-        // Automatically zoom to the new bounds with closer zoom
-        if (mapRef.current) {
-          mapRef.current.fitBounds(updatedBounds, { 
-            maxZoom: 45, // Set maximum zoom level for closer zoom
-          });
-        }
-  
+        const map = mapRef.current
+        map.fitBounds(L.latLngBounds(rasterResponse.bounds), {
+          maxZoom: 15,
+        });
         setIsNewUpload(true);
       } catch (error) {
         console.error("Error fetching raster:", error.message);
@@ -405,9 +474,289 @@ export const Map = ({ hideComponents }) => {
     fetchRaster();
   }, []);
   
- 
+  useEffect(() => {
+    const fetchRaster = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:8000/rasterNikelA/`
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch raster data");
+        }
+  
+        const rasterResponse = await response.json();
+        console.log("Raster Response:", rasterResponse);
+        
+       
+        const newUploadedFile = {
+          name: "Perubahan Wilayah Pertambangan Nikel Tahun 2000",
+          data: rasterResponse, // Base64 images
+          checked: false,
+          bounds: rasterResponse.bounds, // Bounding box
+        };
+  
+        // Update state with new file and raster data
+        setUploadedFiles((prevUploadedFiles) => [
+          ...prevUploadedFiles,
+          newUploadedFile,
+        ]);
+  
+        // Update rasterData state by appending new raster images
+        setRasterData((prevRasterData) => [
+          ...(prevRasterData || []),
+          ...rasterResponse.raster_images,
+        ]);
+  
+        setBounds((prevBounds) =>
+          prevBounds
+            ? prevBounds.extend(L.latLngBounds(rasterResponse.bounds))
+            : L.latLngBounds(rasterResponse.bounds)
+        );
+  
+        const map = mapRef.current
+        map.fitBounds(L.latLngBounds(rasterResponse.bounds), {
+          maxZoom: 15,
+        });
+        setIsNewUpload(false);
+      } catch (error) {
+        console.error("Error fetching raster:", error.message);
+        // Optionally show error to the user here, e.g., via a toast notification
+      }
+    };
+  
+    fetchRaster();
+  }, []);
 
-  // Get bounds everytime shapefile uploaded
+  useEffect(() => {
+    const fetchRaster = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:8000/rasterNikelB/`
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch raster data");
+        }
+  
+        const rasterResponse = await response.json();
+        console.log("Raster Response:", rasterResponse);
+        
+       
+        const newUploadedFile = {
+          name: "Perubahan Wilayah Pertambangan Nikel Tahun 2005",
+          data: rasterResponse, // Base64 images
+          checked: false,
+          bounds: rasterResponse.bounds, // Bounding box
+        };
+  
+        // Update state with new file and raster data
+        setUploadedFiles((prevUploadedFiles) => [
+          ...prevUploadedFiles,
+          newUploadedFile,
+        ]);
+  
+        // Update rasterData state by appending new raster images
+        setRasterData((prevRasterData) => [
+          ...(prevRasterData || []),
+          ...rasterResponse.raster_images,
+        ]);
+  
+        setBounds((prevBounds) =>
+          prevBounds
+            ? prevBounds.extend(L.latLngBounds(rasterResponse.bounds))
+            : L.latLngBounds(rasterResponse.bounds)
+        );
+  
+        const map = mapRef.current
+        map.fitBounds(L.latLngBounds(rasterResponse.bounds), {
+          maxZoom: 15,
+        });
+        setIsNewUpload(false);
+      } catch (error) {
+        console.error("Error fetching raster:", error.message);
+        // Optionally show error to the user here, e.g., via a toast notification
+      }
+    };
+  
+    fetchRaster();
+  }, []);
+
+
+  useEffect(() => {
+    const fetchRaster = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:8000/rasterNikelC/`
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch raster data");
+        }
+  
+        const rasterResponse = await response.json();
+        console.log("Raster Response:", rasterResponse);
+        
+       
+        const newUploadedFile = {
+          name: "Perubahan Wilayah Pertambangan Nikel Tahun 2010",
+          data: rasterResponse, // Base64 images
+          checked: false,
+          bounds: rasterResponse.bounds, // Bounding box
+        };
+  
+        // Update state with new file and raster data
+        setUploadedFiles((prevUploadedFiles) => [
+          ...prevUploadedFiles,
+          newUploadedFile,
+        ]);
+  
+        // Update rasterData state by appending new raster images
+        setRasterData((prevRasterData) => [
+          ...(prevRasterData || []),
+          ...rasterResponse.raster_images,
+        ]);
+  
+        setBounds((prevBounds) =>
+          prevBounds
+            ? prevBounds.extend(L.latLngBounds(rasterResponse.bounds))
+            : L.latLngBounds(rasterResponse.bounds)
+        );
+  
+        const map = mapRef.current
+        map.fitBounds(L.latLngBounds(rasterResponse.bounds), {
+          maxZoom: 15,
+        });
+        setIsNewUpload(false);
+      } catch (error) {
+        console.error("Error fetching raster:", error.message);
+        // Optionally show error to the user here, e.g., via a toast notification
+      }
+    };
+  
+    fetchRaster();
+  }, []);
+
+
+  useEffect(() => {
+    const fetchRaster = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:8000/rasterNikelD/`
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch raster data");
+        }
+  
+        const rasterResponse = await response.json();
+        console.log("Raster Response:", rasterResponse);
+        
+       
+        const newUploadedFile = {
+          name: "Perubahan Wilayah Pertambangan Nikel Tahun 2015",
+          data: rasterResponse, // Base64 images
+          checked: false,
+          bounds: rasterResponse.bounds, // Bounding box
+        };
+  
+        // Update state with new file and raster data
+        setUploadedFiles((prevUploadedFiles) => [
+          ...prevUploadedFiles,
+          newUploadedFile,
+        ]);
+  
+        // Update rasterData state by appending new raster images
+        setRasterData((prevRasterData) => [
+          ...(prevRasterData || []),
+          ...rasterResponse.raster_images,
+        ]);
+  
+        setBounds((prevBounds) =>
+          prevBounds
+            ? prevBounds.extend(L.latLngBounds(rasterResponse.bounds))
+            : L.latLngBounds(rasterResponse.bounds)
+        );
+  
+        const map = mapRef.current
+        map.fitBounds(L.latLngBounds(rasterResponse.bounds), {
+          maxZoom: 15,
+        });
+        setIsNewUpload(false);
+      } catch (error) {
+        console.error("Error fetching raster:", error.message);
+        // Optionally show error to the user here, e.g., via a toast notification
+      }
+    };
+  
+    fetchRaster();
+  }, []);
+
+
+  useEffect(() => {
+    const fetchRaster = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:8000/rasterNikelE/`
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch raster data");
+        }
+  
+        const rasterResponse = await response.json();
+        console.log("Raster Response:", rasterResponse);
+        
+       
+        const newUploadedFile = {
+          name: "Perubahan Wilayah Pertambangan Nikel Tahun 2020",
+          data: rasterResponse, // Base64 images
+          checked: false,
+          bounds: rasterResponse.bounds, // Bounding box
+        };
+  
+        // Update state with new file and raster data
+        setUploadedFiles((prevUploadedFiles) => [
+          ...prevUploadedFiles,
+          newUploadedFile,
+        ]);
+  
+        // Update rasterData state by appending new raster images
+        setRasterData((prevRasterData) => [
+          ...(prevRasterData || []),
+          ...rasterResponse.raster_images,
+        ]);
+  
+        setBounds((prevBounds) =>
+          prevBounds
+            ? prevBounds.extend(L.latLngBounds(rasterResponse.bounds))
+            : L.latLngBounds(rasterResponse.bounds)
+        );
+  
+        const map = mapRef.current
+        map.fitBounds(L.latLngBounds(rasterResponse.bounds), {
+          maxZoom: 15,
+        });
+        setIsNewUpload(false);
+      } catch (error) {
+        console.error("Error fetching raster:", error.message);
+        // Optionally show error to the user here, e.g., via a toast notification
+      }
+    };
+  
+    fetchRaster();
+  }, []);
+
+
+  
+
+  function convertBounds(bounds) {
+    if (bounds && bounds._southWest && bounds._northEast) {
+      return [
+        [bounds._southWest.lat, bounds._southWest.lng], // Southwest corner
+        [bounds._northEast.lat, bounds._northEast.lng], // Northeast corner
+      ];
+    } else {
+      console.error("Invalid bounds object:", bounds);
+      return null;
+    }
+  }
+
   useEffect(() => {
     console.log("useEffect triggered with dependencies: ", {
       geojsonData,
@@ -416,57 +765,71 @@ export const Map = ({ hideComponents }) => {
       isNewUpload,
       uploadedFiles,
     });
-
+  
     if (mapRef.current && isNewUpload) {
       const map = mapRef.current;
       let combinedBounds = null;
-
-      // Fit bounds for geojsonData
-      if (
-        geojsonData &&
-        geojsonData.features &&
-        geojsonData.features.length > 0
-      ) {
-        try {
+  
+      try {
+        // Process geojsonData
+        if (geojsonData && geojsonData.features && geojsonData.features.length > 0) {
+          console.log("GeoJSON data detected:", geojsonData);
           const geoJsonLayer = L.geoJSON(geojsonData);
-          if (geoJsonLayer.getBounds().isValid()) {
-            combinedBounds = L.latLngBounds(geoJsonLayer.getBounds());
+          const geoJsonBounds = geoJsonLayer.getBounds();
+          if (geoJsonBounds.isValid()) {
+            combinedBounds = L.latLngBounds(geoJsonBounds);
+            console.log("GeoJSON bounds:", geoJsonBounds.toBBoxString());
           } else {
-            console.error("Invalid bounds for geojsonData:", geojsonData);
+            console.error("GeoJSON bounds are invalid:", geojsonData);
           }
-        } catch (error) {
-          console.error("Error creating GeoJSON layer:", error);
+        } else {
+          console.warn("No valid geojsonData available.");
         }
-      }
+        console.log("Raster data:", rasterData);
 
-      // Fit bounds for rasterData
-      if (rasterData && rasterData.length > 0) {
-        rasterData.forEach((raster) => {
-          if (raster.bounds) {
-            const rasterBounds = L.latLngBounds(raster.bounds);
-            if (rasterBounds.isValid()) {
-              combinedBounds = combinedBounds
-                ? combinedBounds.extend(rasterBounds)
-                : rasterBounds;
+        // Process rasterData
+        if (rasterData && rasterData.length > 0) {
+          rasterData.forEach((raster, index) => {
+            if (raster.bounds) {
+              const convertedBounds = convertBounds(raster.bounds); // Convert bounds format
+              if (convertedBounds) {
+                const rasterBounds = L.latLngBounds(convertedBounds);
+                console.log("bounds data:", raster.bounds);
+                if (rasterBounds.isValid()) {
+                  combinedBounds = combinedBounds
+                    ? combinedBounds.extend(rasterBounds)
+                    : rasterBounds;
+                  console.log(`Raster bounds [${index}]:`, rasterBounds.toBBoxString());
+                } else {
+                  console.error(`Invalid bounds for raster [${index}]:`, convertedBounds);
+                }
+              }
+            } else {
+              console.warn(`Raster [${index}] missing bounds property:`, raster);
             }
-          }
-        });
+          });
+        } else {
+          console.warn("No valid rasterData available.");
+        }
+  
+        // Fit map to combined bounds if valid
+        if (combinedBounds && combinedBounds.isValid()) {
+          map.fitBounds(combinedBounds, { padding: [20, 20] });
+          console.log("Map fit to combined bounds:", combinedBounds.toBBoxString());
+        } else {
+          console.error("Combined bounds are invalid or undefined:", combinedBounds);
+        }
+      } catch (error) {
+        console.error("Error fitting bounds:", error);
       }
-
-      // Check if combinedBounds is valid before fitting map bounds
-      if (combinedBounds && combinedBounds.isValid()) {
-        map.fitBounds(combinedBounds, {
-          maxZoom: 12,
-        });
-      } else {
-        console.error("Invalid combinedBounds:", combinedBounds);
-      }
-
-      setIsNewUpload(false); // Reset isNewUpload after fitting bounds
-
+  
+      // Reset the upload state
+      setIsNewUpload(false);
       console.log("Bounds fit completed, isNewUpload reset");
     }
   }, [geojsonData, rasterData, bounds, isNewUpload, uploadedFiles]);
+  
+  
 
   const position = [-2.483383, 117.890285];
 
@@ -577,6 +940,13 @@ export const Map = ({ hideComponents }) => {
             file.checked && // Only show checked files
             !file.name.endsWith(".tif") &&
             !file.name.endsWith(".tiff") &&
+            !file.name.endsWith("2000-2020") &&
+            !file.name.endsWith("2000")&&     
+          !file.name.endsWith("2005") &&
+          !file.name.endsWith("2010")&&
+          !file.name.endsWith("2015")&&
+          !file.name.endsWith("2020")&&
+
             file.data
           ) {
             return (

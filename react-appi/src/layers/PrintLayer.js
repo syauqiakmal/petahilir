@@ -1,7 +1,7 @@
 import logo from "../Logo/Printer.png";
 import { Map } from "../Map/Map"; // Peta pertama
 import { Mapi as Map2 } from "../Map/MapCoba_bauksite"; // Peta kedua
-import { Mapi as Map3 } from "../Map/MapCoba_cobalt"; // Peta ketiga
+import { Mapi as Map3 } from "../Map/MapCoba_Pasir"; // Peta ketiga
 
 
 import React, { useState, useRef, useCallback } from "react";

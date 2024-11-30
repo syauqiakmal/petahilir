@@ -107,7 +107,10 @@ export const Mapi = ({ hideComponents }) => {
     const selectedRasterFiles = updatedFiles.filter(
       (file) =>
         file.checked &&
-        (file.name.endsWith(".tif") || file.name.endsWith(".tiff"))
+        (file.name.endsWith(".tif") || file.name.endsWith(".tiff") || file.name.endsWith("2000-2020") || file.name.endsWith("2005") ||
+        file.name.endsWith("2010")||
+        file.name.endsWith("2015")||
+        file.name.endsWith("2020"))
     );
 
     // Combine all raster data for rendering on map
@@ -329,60 +332,328 @@ export const Mapi = ({ hideComponents }) => {
 
   
 
-  // useEffect(() => {
-  //   const fetchRaster = async () => {
-  //     try {
-  //       const response = await fetch(
-  //         `http://localhost:8000/raster/image_export_mchange_geometrybauksit`
-  //       );
-  //       if (!response.ok) {
-  //         throw new Error("Failed to fetch raster data");
-  //       }
+  useEffect(() => {
+    const fetchRaster = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:8000/raster2/`
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch raster data");
+        }
   
-  //       const rasterResponse = await response.json();
+        const rasterResponse = await response.json();
+        console.log("Raster Response:", rasterResponse);
+        
+       
+        const newUploadedFile = {
+          name: "Perubahan Wilayah Pertambangan Pasir Kuarsa Tahun 2000-2020",
+          data: rasterResponse, // Base64 images
+          checked: true,
+          bounds: rasterResponse.bounds, // Bounding box
+        };
   
-  //       const newUploadedFile = {
-  //         name: "Perubahan Wilayah Pertambangan Bauksit Tahun 2000-2020",
-  //         data: rasterResponse.raster_images, // Base64 images
-  //         checked: true,
-  //         bounds: rasterResponse.bounds, // Bounding box
-  //       };
+        // Update state with new file and raster data
+        setUploadedFiles((prevUploadedFiles) => [
+          ...prevUploadedFiles,
+          newUploadedFile,
+        ]);
   
-  //       // Update state with new file and raster data
-  //       setUploadedFiles((prevUploadedFiles) => [
-  //         ...prevUploadedFiles,
-  //         newUploadedFile,
-  //       ]);
+        // Update rasterData state by appending new raster images
+        setRasterData((prevRasterData) => [
+          ...(prevRasterData || []),
+          ...rasterResponse.raster_images,
+        ]);
   
-  //       // Update rasterData state by appending new raster images
-  //       setRasterData((prevRasterData) => [
-  //         ...(prevRasterData || []),
-  //         ...rasterResponse.raster_images,
-  //       ]);
+        setBounds((prevBounds) =>
+          prevBounds
+            ? prevBounds.extend(L.latLngBounds(rasterResponse.bounds))
+            : L.latLngBounds(rasterResponse.bounds)
+        );
   
-  //       // Update bounds state based on new raster bounds
-  //       const updatedBounds = L.latLngBounds(rasterResponse.bounds);
-  //       setBounds((prevBounds) =>
-  //         prevBounds ? prevBounds.extend(updatedBounds) : updatedBounds
-  //       );
+        const map = mapRef.current
+        map.fitBounds(L.latLngBounds(rasterResponse.bounds), {
+          maxZoom: 15,
+        });
+       
   
-  //       // Automatically zoom to the new bounds with closer zoom
-  //       if (mapRef.current) {
-  //         mapRef.current.fitBounds(updatedBounds, { 
-  //           maxZoom: 20, // Set maximum zoom level for closer zoom
-  //         });
-  //       }
+        setIsNewUpload(true);
+      } catch (error) {
+        console.error("Error fetching raster:", error.message);
+        // Optionally show error to the user here, e.g., via a toast notification
+      }
+    };
   
-  //       setIsNewUpload(true);
-  //     } catch (error) {
-  //       console.error("Error fetching raster:", error.message);
-  //       // Optionally show error to the user here, e.g., via a toast notification
-  //     }
-  //   };
+    fetchRaster();
+  }, []);
   
-  //   fetchRaster();
-  // }, []);
+  useEffect(() => {
+    const fetchRaster = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:8000/rasterkuarsaA/`
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch raster data");
+        }
   
+        const rasterResponse = await response.json();
+        console.log("Raster Response:", rasterResponse);
+        
+       
+        const newUploadedFile = {
+          name: "Perubahan Wilayah Pertambangan Kuarsa Tahun 2000",
+          data: rasterResponse, // Base64 images
+          checked: false,
+          bounds: rasterResponse.bounds, // Bounding box
+        };
+  
+        // Update state with new file and raster data
+        setUploadedFiles((prevUploadedFiles) => [
+          ...prevUploadedFiles,
+          newUploadedFile,
+        ]);
+  
+        // Update rasterData state by appending new raster images
+        setRasterData((prevRasterData) => [
+          ...(prevRasterData || []),
+          ...rasterResponse.raster_images,
+        ]);
+  
+        setBounds((prevBounds) =>
+          prevBounds
+            ? prevBounds.extend(L.latLngBounds(rasterResponse.bounds))
+            : L.latLngBounds(rasterResponse.bounds)
+        );
+  
+        const map = mapRef.current
+        map.fitBounds(L.latLngBounds(rasterResponse.bounds), {
+          maxZoom: 15,
+        });
+        setIsNewUpload(false);
+      } catch (error) {
+        console.error("Error fetching raster:", error.message);
+        // Optionally show error to the user here, e.g., via a toast notification
+      }
+    };
+  
+    fetchRaster();
+  }, []);
+
+  useEffect(() => {
+    const fetchRaster = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:8000/rasterkuarsaB/`
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch raster data");
+        }
+  
+        const rasterResponse = await response.json();
+        console.log("Raster Response:", rasterResponse);
+        
+       
+        const newUploadedFile = {
+          name: "Perubahan Wilayah Pertambangan Kuarsa Tahun 2005",
+          data: rasterResponse, // Base64 images
+          checked: false,
+          bounds: rasterResponse.bounds, // Bounding box
+        };
+  
+        // Update state with new file and raster data
+        setUploadedFiles((prevUploadedFiles) => [
+          ...prevUploadedFiles,
+          newUploadedFile,
+        ]);
+  
+        // Update rasterData state by appending new raster images
+        setRasterData((prevRasterData) => [
+          ...(prevRasterData || []),
+          ...rasterResponse.raster_images,
+        ]);
+  
+        setBounds((prevBounds) =>
+          prevBounds
+            ? prevBounds.extend(L.latLngBounds(rasterResponse.bounds))
+            : L.latLngBounds(rasterResponse.bounds)
+        );
+  
+        const map = mapRef.current
+        map.fitBounds(L.latLngBounds(rasterResponse.bounds), {
+          maxZoom: 15,
+        });
+        setIsNewUpload(false);
+      } catch (error) {
+        console.error("Error fetching raster:", error.message);
+        // Optionally show error to the user here, e.g., via a toast notification
+      }
+    };
+  
+    fetchRaster();
+  }, []);
+
+
+  useEffect(() => {
+    const fetchRaster = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:8000/rasterkuarsaC/`
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch raster data");
+        }
+  
+        const rasterResponse = await response.json();
+        console.log("Raster Response:", rasterResponse);
+        
+       
+        const newUploadedFile = {
+          name: "Perubahan Wilayah Pertambangan Kuarsa Tahun 2010",
+          data: rasterResponse, // Base64 images
+          checked: false,
+          bounds: rasterResponse.bounds, // Bounding box
+        };
+  
+        // Update state with new file and raster data
+        setUploadedFiles((prevUploadedFiles) => [
+          ...prevUploadedFiles,
+          newUploadedFile,
+        ]);
+  
+        // Update rasterData state by appending new raster images
+        setRasterData((prevRasterData) => [
+          ...(prevRasterData || []),
+          ...rasterResponse.raster_images,
+        ]);
+  
+        setBounds((prevBounds) =>
+          prevBounds
+            ? prevBounds.extend(L.latLngBounds(rasterResponse.bounds))
+            : L.latLngBounds(rasterResponse.bounds)
+        );
+  
+        const map = mapRef.current
+        map.fitBounds(L.latLngBounds(rasterResponse.bounds), {
+          maxZoom: 15,
+        });
+        setIsNewUpload(false);
+      } catch (error) {
+        console.error("Error fetching raster:", error.message);
+        // Optionally show error to the user here, e.g., via a toast notification
+      }
+    };
+  
+    fetchRaster();
+  }, []);
+
+
+  useEffect(() => {
+    const fetchRaster = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:8000/rasterkuarsaD/`
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch raster data");
+        }
+  
+        const rasterResponse = await response.json();
+        console.log("Raster Response:", rasterResponse);
+        
+       
+        const newUploadedFile = {
+          name: "Perubahan Wilayah Pertambangan Kuarsa Tahun 2015",
+          data: rasterResponse, // Base64 images
+          checked: false,
+          bounds: rasterResponse.bounds, // Bounding box
+        };
+  
+        // Update state with new file and raster data
+        setUploadedFiles((prevUploadedFiles) => [
+          ...prevUploadedFiles,
+          newUploadedFile,
+        ]);
+  
+        // Update rasterData state by appending new raster images
+        setRasterData((prevRasterData) => [
+          ...(prevRasterData || []),
+          ...rasterResponse.raster_images,
+        ]);
+  
+        setBounds((prevBounds) =>
+          prevBounds
+            ? prevBounds.extend(L.latLngBounds(rasterResponse.bounds))
+            : L.latLngBounds(rasterResponse.bounds)
+        );
+  
+        const map = mapRef.current
+        map.fitBounds(L.latLngBounds(rasterResponse.bounds), {
+          maxZoom: 15,
+        });
+        setIsNewUpload(false);
+      } catch (error) {
+        console.error("Error fetching raster:", error.message);
+        // Optionally show error to the user here, e.g., via a toast notification
+      }
+    };
+  
+    fetchRaster();
+  }, []);
+
+
+  useEffect(() => {
+    const fetchRaster = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:8000/rasterkuarsaE/`
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch raster data");
+        }
+  
+        const rasterResponse = await response.json();
+        console.log("Raster Response:", rasterResponse);
+        
+       
+        const newUploadedFile = {
+          name: "Perubahan Wilayah Pertambangan Kuarsa Tahun 2020",
+          data: rasterResponse, // Base64 images
+          checked: false,
+          bounds: rasterResponse.bounds, // Bounding box
+        };
+  
+        // Update state with new file and raster data
+        setUploadedFiles((prevUploadedFiles) => [
+          ...prevUploadedFiles,
+          newUploadedFile,
+        ]);
+  
+        // Update rasterData state by appending new raster images
+        setRasterData((prevRasterData) => [
+          ...(prevRasterData || []),
+          ...rasterResponse.raster_images,
+        ]);
+  
+        setBounds((prevBounds) =>
+          prevBounds
+            ? prevBounds.extend(L.latLngBounds(rasterResponse.bounds))
+            : L.latLngBounds(rasterResponse.bounds)
+        );
+  
+        const map = mapRef.current
+        map.fitBounds(L.latLngBounds(rasterResponse.bounds), {
+          maxZoom: 15,
+        });
+        setIsNewUpload(false);
+      } catch (error) {
+        console.error("Error fetching raster:", error.message);
+        // Optionally show error to the user here, e.g., via a toast notification
+      }
+    };
+  
+    fetchRaster();
+  }, []);
  
 
   // Get bounds everytime shapefile uploaded
@@ -555,6 +826,12 @@ export const Mapi = ({ hideComponents }) => {
             file.checked && // Only show checked files
             !file.name.endsWith(".tif") &&
             !file.name.endsWith(".tiff") &&
+            !file.name.endsWith("2000-2020") && 
+            !file.name.endsWith("2000")&&     
+            !file.name.endsWith("2005") &&
+            !file.name.endsWith("2010")&&
+            !file.name.endsWith("2015")&&
+            !file.name.endsWith("2020")&&
             file.data
           ) {
             return (

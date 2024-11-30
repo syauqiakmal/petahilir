@@ -149,7 +149,7 @@ const Menu = ({
                   open={dropdownStates[index]}
                 >
                   {/* Check if file is a TIFF or ZIP */}
-                  {file.name.endsWith(".tif") || file.name.endsWith(".tiff") ? (
+                  {file.name.endsWith(".tif") || file.name.endsWith(".tiff") || file.name.endsWith("2000-2020")|| file.name.endsWith("2000")|| file.name.endsWith("2005")|| file.name.endsWith("2010")|| file.name.endsWith("2015")|| file.name.endsWith("2020")? (
                     <summary
                       style={{
                         display: "flex",
@@ -203,7 +203,7 @@ const Menu = ({
                         <div className="additional-info">
                           <ul className="ulshp">
                             {file.name.endsWith(
-                              "Perubahan Wilayah Pertambangan Nikel Tahun 2000-2020"
+                              "2000-2020"
                             ) &&
                             file.selectedColumns &&
                             file.selectedColumns.length > 0 ? (
