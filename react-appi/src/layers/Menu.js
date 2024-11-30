@@ -117,7 +117,7 @@ const Menu = ({
             </div>
           </li>
           <hr className="divider" /> {/* Pembatas */}
-          <li className="inputshp">
+          {/* <li className="inputshp">
             <label className="choose_file">
               <input
                 type="file"
@@ -139,7 +139,7 @@ const Menu = ({
                 disabled={!isUploadCheckboxEnabled}
               />
             </label>
-          </li>
+          </li> */}
           <br></br>
           {uploadedFiles.map((file, index) => (
             <li key={index}>

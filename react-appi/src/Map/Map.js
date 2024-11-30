@@ -187,7 +187,7 @@ export const Map = ({ hideComponents }) => {
 
     try {
       // Upload file
-      const uploadResponse = await fetch("http://35.209.156.52:8000/upload", {
+      const uploadResponse = await fetch("http://localhost:8000/upload", {
         method: "POST",
         body: formData,
       });
@@ -199,7 +199,7 @@ export const Map = ({ hideComponents }) => {
       // Handle zipped shapefile
       if (file.name.endsWith(".zip")) {
         const dataResponse = await fetch(
-          `http://35.209.156.52:8000/data/${tableName}`
+          `http://localhost:8000/data/${tableName}`
         );
         if (!dataResponse.ok) {
           throw new Error("Failed to fetch shapefile data");
@@ -229,7 +229,7 @@ export const Map = ({ hideComponents }) => {
       // Handle raster file
       else if (file.name.endsWith(".tif") || file.name.endsWith(".tiff")) {
         const dataResponse = await fetch(
-          `http://35.209.156.52:8000/raster/${tableName}`
+          `http://localhost:8000/raster/${tableName}`
         );
         if (!dataResponse.ok) {
           throw new Error("Failed to fetch raster data");
@@ -268,7 +268,7 @@ export const Map = ({ hideComponents }) => {
       // Handle geojson file
       else if (file.name.endsWith(".geojson")) {
         const dataResponse = await fetch(
-          `http://35.209.156.52:8000/geojson/${tableName}`
+          `http://localhost:8000/geojson/${tableName}`
         );
         if (!dataResponse.ok) {
           throw new Error(

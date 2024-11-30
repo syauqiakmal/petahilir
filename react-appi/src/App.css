@@ -16,8 +16,8 @@
 
 .modal-container2 {
   position: absolute;
-  top: 562px;
-  right: 15px;
+  right: 1px;
+  bottom: 50px;
   background-color: #fbfafa00;
   border-radius: 10px;
   padding: 20px;
@@ -30,7 +30,6 @@
   flex-direction: column; /* Stack children vertically */
   align-items: center; /* Centers items horizontally */
 }
-
 
 
 .modal-container {
@@ -571,8 +570,7 @@ input[type=file]::file-selector-button:hover {
   top: calc( 8vh); 
   left: calc(0% );
   right: -200px;
- width: 390px;
- height: 400px;
+ width: 370px;
   background-color: #076a94d3;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
   border-radius: 7px;
@@ -582,7 +580,7 @@ input[type=file]::file-selector-button:hover {
 }
 
 /* .dashboard-links.open{
-  
+  height: 820px
 } */
 
 

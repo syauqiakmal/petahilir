@@ -338,7 +338,7 @@ export const Mapi = ({ hideComponents }) => {
     const fetchRaster = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8000/raster3/`
+          `http://localhost:8000/raster2/`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch raster data");
@@ -349,7 +349,7 @@ export const Mapi = ({ hideComponents }) => {
         
        
         const newUploadedFile = {
-          name: "Perubahan Wilayah Pertambangan Bauksit Tahun 2000-2020",
+          name: "Perubahan Wilayah Pertambangan Pasir Kuarsa Tahun 2000-2020",
           data: rasterResponse, // Base64 images
           checked: true,
           bounds: rasterResponse.bounds, // Bounding box
@@ -389,11 +389,14 @@ export const Mapi = ({ hideComponents }) => {
     fetchRaster();
   }, []);
   
+ 
+
+
   useEffect(() => {
     const fetchRaster = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8000/rasterbauksitA/`
+          `http://localhost:8000/rasterkuarsaA/`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch raster data");
@@ -404,7 +407,7 @@ export const Mapi = ({ hideComponents }) => {
         
        
         const newUploadedFile = {
-          name: "Perubahan Wilayah Pertambangan Bauksit Tahun 2000",
+          name: "Perubahan Wilayah Pertambangan Kuarsa Tahun 2000",
           data: rasterResponse, // Base64 images
           checked: false,
           bounds: rasterResponse.bounds, // Bounding box
@@ -446,7 +449,7 @@ export const Mapi = ({ hideComponents }) => {
     const fetchRaster = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8000/rasterbauksitB/`
+          `http://localhost:8000/rasterkuarsaB/`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch raster data");
@@ -457,61 +460,7 @@ export const Mapi = ({ hideComponents }) => {
         
        
         const newUploadedFile = {
-          name: "Perubahan Wilayah Pertambangan Bauksit Tahun 2005",
-          data: rasterResponse, // Base64 images
-          checked: false,
-          bounds: rasterResponse.bounds, // Bounding box
-        };
-  
-        // Update state with new file and raster data
-        setUploadedFiles((prevUploadedFiles) => [
-          ...prevUploadedFiles,
-          newUploadedFile,
-        ]);
-  
-        // Update rasterData state by appending new raster images
-        setRasterData((prevRasterData) => [
-          ...(prevRasterData || []),
-          ...rasterResponse.raster_images,
-        ]);
-  
-        setBounds((prevBounds) =>
-          prevBounds
-            ? prevBounds.extend(L.latLngBounds(rasterResponse.bounds))
-            : L.latLngBounds(rasterResponse.bounds)
-        );
-  
-        const map = mapRef.current
-        map.fitBounds(L.latLngBounds(rasterResponse.bounds), {
-          maxZoom: 15,
-        });
-        setIsNewUpload(false);
-      } catch (error) {
-        console.error("Error fetching raster:", error.message);
-        // Optionally show error to the user here, e.g., via a toast notification
-      }
-    };
-  
-    fetchRaster();
-  }, []);
-
-
-  useEffect(() => {
-    const fetchRaster = async () => {
-      try {
-        const response = await fetch(
-          `http://localhost:8000/rasterbauksitC/`
-        );
-        if (!response.ok) {
-          throw new Error("Failed to fetch raster data");
-        }
-  
-        const rasterResponse = await response.json();
-        console.log("Raster Response:", rasterResponse);
-        
-       
-        const newUploadedFile = {
-          name: "Perubahan Wilayah Pertambangan Bauksit Tahun 2010",
+          name: "Perubahan Wilayah Pertambangan Kuarsa Tahun 2005",
           data: rasterResponse, // Base64 images
           checked: false,
           bounds: rasterResponse.bounds, // Bounding box
@@ -554,7 +503,7 @@ export const Mapi = ({ hideComponents }) => {
     const fetchRaster = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8000/rasterbauksitD/`
+          `http://localhost:8000/rasterkuarsaC/`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch raster data");
@@ -565,7 +514,7 @@ export const Mapi = ({ hideComponents }) => {
         
        
         const newUploadedFile = {
-          name: "Perubahan Wilayah Pertambangan Bauksit Tahun 2015",
+          name: "Perubahan Wilayah Pertambangan Kuarsa Tahun 2010",
           data: rasterResponse, // Base64 images
           checked: false,
           bounds: rasterResponse.bounds, // Bounding box
@@ -608,7 +557,7 @@ export const Mapi = ({ hideComponents }) => {
     const fetchRaster = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8000/rasterbauksitE/`
+          `http://localhost:8000/rasterkuarsaD/`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch raster data");
@@ -619,7 +568,7 @@ export const Mapi = ({ hideComponents }) => {
         
        
         const newUploadedFile = {
-          name: "Perubahan Wilayah Pertambangan Bauksit Tahun 2020",
+          name: "Perubahan Wilayah Pertambangan Kuarsa Tahun 2015",
           data: rasterResponse, // Base64 images
           checked: false,
           bounds: rasterResponse.bounds, // Bounding box
