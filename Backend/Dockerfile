@@ -41,6 +41,7 @@
 # # Set the default command to start the app
 # CMD ["python", "main.py"]
 
+#new
 # Use a Debian-based image
 FROM python:3.9-slim
 
