@@ -7,58 +7,32 @@ import L from 'leaflet';
 
 // Helper function to calculate color based on selected property
 const calculateColor = (value, selectedProperty) => {
-  let color = '#ff0000'; // Default to 'red'
+  let color = '#fbfafa00'; // Default to 'black/transparent'
 
-  // Define ranges and colors for each property
-  const ranges = {
-    recycled: [
-      { min: 50000, color: '#ffffe0' }, // White
-      { min: 30000, color: '#ffff99' }, // Pale yellow
-      { min: 10000, color: '#ffcc00' }, // Yellow
-      { min: 5000, color: '#ff9900' },  // Orange
-      { min: 0, color: '#ff0000' }       // Red-orange
-    ],
-    total_wst: [
-      { min: 50000, color: '#ffffe0' }, // White
-      { min: 40000, color: '#ffff99' }, // Pale yellow
-      { min: 30000, color: '#ffcc00' }, // Yellow
-      { min: 20000, color: '#ff9900' }, // Orange
-      { min: 0, color: '#ff0000' }      // Red-orange
-    ],
-    truck_qty: [
-      { min: 20, color: '#ffffe0' }, // White
-      { min: 15, color: '#ffff99' }, // Pale yellow
-      { min: 10, color: '#ffcc00' }, // Yellow
-      { min: 0, color: '#ff0000' }   // Red-orange
-    ],
-
-    clustering: [
-      { min: 2, color: '#ffcc00' }, // Orange
-      { min: 1, color: '#ff9900' }, // Yellow
-      { min: 0, color: '#ff0000' }, // Red
-
-    ]
+  // Define colors for each ibt_stat
+  const ibtStatColors = {
+    null: '#fbfafa00',      // Black/transparent
+    Terminated: '#ff0000', // Red
+    Signed: '#ff9900',     // Orange
+    'In force': '#00ff00'  // Green
   };
 
-
-
-  // Get the color range for the selected property
-  const propertyRanges = ranges[selectedProperty] || [];
-  console.log(`Selected Property: ${selectedProperty}`);
-  console.log(`Value: ${value}`);
-  console.log(`Property Ranges:`, propertyRanges);
-
-  // Find the color based on the value
-  for (const range of propertyRanges) {
-    if (value >= range.min) {
-      color = range.color;
-      break;
-    }
+  // Handle ibt_stat property
+  if (selectedProperty === 'ibt_stat') {
+    // Normalize value to handle null case and match keys
+    const normalizedValue = value ? value.trim() : 'null';
+    color = ibtStatColors[normalizedValue] || '#fbfafa00'; // Default to black if no match
+  } else {
+    // Default handling for other properties if needed
+    console.warn(`Unhandled property: ${selectedProperty}`);
   }
 
+  console.log(`Selected Property: ${selectedProperty}`);
+  console.log(`Value: ${value}`);
   console.log(`Selected Color: ${color}`);
   return color;
 };
+
 
 // Function to get the style for each feature
 export const getFeatureStyle = (feature, selectedProperty) => {
@@ -151,7 +125,7 @@ export const onEachFeature = (feature, layer, uploadedFiles, selectedProperty) =
 export const PopupComponent = ({ onTogglePopup, onToggleLegend, data, onSelectPropertyChange }) => {
   const [features, setFeatures] = useState([]);
   const [selectedProperties, setSelectedProperties] = useState({});
-  const [selectedProperty, setSelectedProperty] = useState('clustering'); // Default property
+  const [selectedProperty, setSelectedProperty] = useState('ibt_stat'); // Default property
 
   const handleClick = () => {
     onTogglePopup();

@@ -668,6 +668,14 @@ async def get_raster1():
 async def get_raster1():
     return await process_raster_file(r"data/image_export_m20_geometrybauksit.tif")
 
+
+@app.get("/shapefile/")
+async def get_shapefile():
+    zip_path = r"data/world-administrative-boundaries.zip"  # Ganti dengan path ke file .zip Anda
+    feature_collection = process_shapefile(zip_path)
+    return await feature_collection
+
+
  
  
  
@@ -724,6 +732,59 @@ async def process_raster_file(file_path: str):
     except Exception as e:
         print("Error:", e)
         raise HTTPException(status_code=500, detail="Internal Server Error")
+    
+    
+
+    
+async def process_shapefile(zip_path):
+    temp_dir = "temp_shapefile_data"
+    os.makedirs(temp_dir, exist_ok=True)
+
+    try:
+        # Ekstrak file dari ZIP
+        with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+            zip_ref.extractall(temp_dir)
+
+        # Cari file .shp
+        shapefile_path = None
+        for file_name in os.listdir(temp_dir):
+            if file_name.endswith(".shp"):
+                shapefile_path = os.path.join(temp_dir, file_name)
+                break
+
+        if not shapefile_path:
+            raise FileNotFoundError("Tidak ada file .shp dalam ZIP")
+
+        # Membaca data dari shapefile
+        with shapefile.Reader(shapefile_path, encoding='ISO-8859-1') as shp:
+            fields = shp.fields[1:]  # Skip deletion field
+            field_names = [field[0].lower() for field in fields]
+
+            # Buat FeatureCollection
+            features = []
+            for shape_record in shp.shapeRecords():
+                geometry = shape_record.shape.__geo_interface__
+                properties = dict(zip(field_names, shape_record.record))
+                feature = geojson.Feature(
+                    id=None,  # Anda bisa mengisi ID jika diperlukan
+                    geometry=geometry,
+                    properties=properties
+                )
+                features.append(feature)
+
+            feature_collection = geojson.FeatureCollection(features)
+            return feature_collection
+
+    except Exception as e:
+        print("Error:", e)
+        raise HTTPException(status_code=500, detail="Internal Server Error")
+
+    finally:
+        # Hapus file sementara
+        for root, _, files in os.walk(temp_dir, topdown=False):
+            for file_name in files:
+                os.remove(os.path.join(root, file_name))
+            os.rmdir(root)
 
 @app.get("/verify-db-connection")
 async def verify_db_connection():

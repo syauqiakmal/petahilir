@@ -2,7 +2,7 @@ import logo from "../Logo/Printer.png";
 import { Map } from "../Map/Map"; // Peta pertama
 import { Mapi as Map2 } from "../Map/MapCoba_bauksite"; // Peta kedua
 import { Mapi as Map3 } from "../Map/MapCoba_Pasir"; // Peta ketiga
-
+import { Map as Map4 } from "../Map/Map_copy_BIT"; // Peta keempat
 
 import React, { useState, useRef, useCallback } from "react";
 import { toPng } from "html-to-image";
@@ -50,12 +50,12 @@ export const PrintLayer = () => {
 
     return (
         <div>
-            {/* Tombol untuk memilih peta */}
+            {/* Tombol untuk memilih peta 1-3 */}
             <div style={{ position: "absolute", top: "3%", right: "0%", zIndex: 1002 }}>
                 <button
                     onClick={() => setActiveMap("map1")}
                     style={{
-                        marginRight: "600px",
+                        marginRight: "620px",
                         padding: "10px",
                         width: "90px",
                         background: activeMap === "map1" ? "#08709d" : "white",
@@ -69,22 +69,21 @@ export const PrintLayer = () => {
                 <button
                     onClick={() => setActiveMap("map2")}
                     style={{
-                        marginRight: "700px",
+                        marginRight: "780px",
                         padding: "10px",
                         width: "200px",
                         background: activeMap === "map2" ? "#08709d" : "white",
                         color: activeMap === "map2" ? "white" : "black",
                         borderRadius: "50px",
-
                         cursor: "pointer",
                     }}
                 >
-                   Pasir Kuarsa
+                    Pasir Kuarsa
                 </button>
                 <button
                     onClick={() => setActiveMap("map3")}
                     style={{
-                        marginRight: "910px",
+                        marginRight: "1050px",
                         padding: "10px",
                         width: "90px",
                         background: activeMap === "map3" ? "#08709d" : "white",
@@ -95,7 +94,23 @@ export const PrintLayer = () => {
                 >
                     Bauksit
                 </button>
-               
+            </div>
+
+            {/* Tombol untuk memilih peta ke-4 */}
+            <div style={{ position: "absolute", top: "90%", left: "60%", zIndex: 1002 }}>
+                <button
+                    onClick={() => setActiveMap("map4")}
+                    style={{
+                        padding: "10px",
+                        width: "350px",
+                        background: activeMap === "map4" ? "#08709d" : "white",
+                        color: activeMap === "map4" ? "white" : "black",
+                        borderRadius: "50px",
+                        cursor: "pointer",
+                    }}
+                >
+                    Bilateral Investment Treaties (BITs)
+                </button>
             </div>
 
             {/* Tombol untuk mencetak */}
@@ -130,7 +145,7 @@ export const PrintLayer = () => {
                 {activeMap === "map1" && <Map hideComponents={hideComponents} />}
                 {activeMap === "map2" && <Map2 hideComponents={hideComponents} />}
                 {activeMap === "map3" && <Map3 hideComponents={hideComponents} />}
-                
+                {activeMap === "map4" && <Map4 hideComponents={hideComponents} />}
 
                 {isLoading && (
                     <div

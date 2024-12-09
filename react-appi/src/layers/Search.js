@@ -76,8 +76,8 @@ const clearInput = () => {
       onMouseLeave={() => setIsExpanded(searchText !== '')} style={{
         position: "absolute",
         top: "1%",
-        left: "94%",
-        transform: "translate(-50%, 0)", // Translasi horizontal dikoreksi
+        left: "99%",
+        transform: "translate(-100%, 0)", // Translasi horizontal dikoreksi
         zIndex: 1000,
       }}>
   <input
