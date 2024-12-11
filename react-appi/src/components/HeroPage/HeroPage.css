@@ -1,0 +1,111 @@
+/* Hero Section */
+#hero-page-section {
+    position: relative;
+    width: 100%;
+    min-height: 70vh;
+    display: flex;
+    align-items: end;
+    justify-content: left;
+    text-align: left;
+    color: white;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+  
+  #hero-page-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+  }
+  
+  #hero-page-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+  }
+  
+  #hero-page-content {
+    position: relative;
+    z-index: 1;
+    padding: 20px;
+    max-width: 1355px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  
+  #hero-page-title {
+    font-size: 14px;
+    margin-bottom: 10px;
+    font-weight: 400;
+  }
+  
+  #hero-page-subtitle {
+    font-size: 40px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    line-height: 1.2;
+    max-width: 100%;
+    color: #fff;
+    margin-top: 0;
+  }
+  
+  #hero-page-description {
+    font-size: 1.25rem;
+    margin: 0 auto 20px;
+    line-height: 1.5;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 1024px) {
+    #hero-page-section {
+      min-height: 100vh;
+    }
+    
+    #hero-page-subtitle {
+      font-size: 2.5rem;
+    }
+    #hero-page-description {
+      font-size: 1.125rem;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    body, html {
+      overflow-x: hidden; /* Hides horizontal overflow for mobile devices */
+    }
+  
+    #hero-page-title {
+      font-size: 1rem;
+    }
+    #hero-page-subtitle {
+      font-size: 2rem;
+    }
+    #hero-page-description {
+      font-size: 1rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    body, html {
+      overflow-x: hidden; /* Hides horizontal overflow for mobile devices */
+    }
+  
+    #hero-page-title {
+      font-size: 0.875rem;
+    }
+    #hero-page-subtitle {
+      font-size: 1.5rem;
+    }
+    #hero-page-description {
+      font-size: 0.875rem;
+    }
+  }

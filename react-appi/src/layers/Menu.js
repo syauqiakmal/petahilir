@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import logo from "../images/PetaHilirisasi.id.png";
-
+import { Link } from 'react-router-dom';
 const Menu = ({
   selectedOption,
   handleOptionChange,
@@ -58,10 +58,12 @@ const Menu = ({
         <div className="strip"></div>
       </label>
       <hr className="divider-vertical" />
-      <div className="menu-logo-container">
+      <Link to="/"><div className="menu-logo-container">
+      
         <img src={logo} alt="Logo" className="logo" />
         <h2 className="menu-title">petahilirisasi.id</h2>
-      </div>
+        
+      </div></Link>
 
       <div className={`dashboard-links ${isMenuOpen ? "open" : ""}`}>
         <ul>

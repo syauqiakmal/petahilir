@@ -7,8 +7,8 @@ import { Map as Map4 } from "../Map/Map_copy_BIT"; // Peta keempat
 import React, { useState, useRef, useCallback } from "react";
 import { toPng } from "html-to-image";
 
-export const PrintLayer = () => {
-    const [activeMap, setActiveMap] = useState("map1"); // "map1", "map2", "map3", atau "map4"
+export const PrintLayer = ({ activeMap: initialMap }) => {
+    const [activeMap, setActiveMap] = useState(initialMap || "map1"); // "map1", "map2", "map3", atau "map4"
     const [hideComponents, setHideComponents] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const mapRef = useRef();
@@ -54,6 +54,7 @@ export const PrintLayer = () => {
             <div style={{ position: "absolute", top: "3%", right: "0%", zIndex: 1002 }}>
                 <button
                     onClick={() => setActiveMap("map1")}
+                    className={`map-button ${activeMap === "map1" ? "active" : ""}`}
                     style={{
                         marginRight: "620px",
                         padding: "10px",
@@ -68,6 +69,7 @@ export const PrintLayer = () => {
                 </button>
                 <button
                     onClick={() => setActiveMap("map2")}
+                    className={`map-button ${activeMap === "map2" ? "active" : ""}`}
                     style={{
                         marginRight: "780px",
                         padding: "10px",
@@ -82,6 +84,7 @@ export const PrintLayer = () => {
                 </button>
                 <button
                     onClick={() => setActiveMap("map3")}
+                    className={`map-button ${activeMap === "map3" ? "active" : ""}`}
                     style={{
                         marginRight: "1050px",
                         padding: "10px",
@@ -100,6 +103,7 @@ export const PrintLayer = () => {
             <div style={{ position: "absolute", top: "90%", left: "60%", zIndex: 1002 }}>
                 <button
                     onClick={() => setActiveMap("map4")}
+                    className={`map-button ${activeMap === "map4" ? "active" : ""}`}
                     style={{
                         padding: "10px",
                         width: "350px",
