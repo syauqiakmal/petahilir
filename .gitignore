@@ -1,2 +1,3 @@
 /react-appi/node_modules
 /myenv
+__pycache__/*
