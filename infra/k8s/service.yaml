@@ -9,8 +9,10 @@ metadata:
 spec:
   selector:
     app: landing-page
-  type: ClusterIP # default, can be NodePort, LoadBalancer, ExternalName
+    tier: frontend
+  type: ClusterIP
   ports:
     - protocol: TCP
-      port: 80 # port of service
-      targetPort: 3000 # port of application/pod
+      port: 80 # port of the service
+      targetPort: 3000 # port of the application/pod
+
