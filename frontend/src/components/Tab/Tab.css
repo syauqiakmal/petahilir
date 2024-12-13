@@ -193,6 +193,7 @@ table, th, td {
 
 table{
   margin-top: 5px;
+  width: 100%;
 }
 
 sup {
@@ -324,5 +325,25 @@ bold, b{
 
   ul, li, p{
     width: 264px;
+  }
+
+  table{
+    width: 389px;
+  }
+}
+
+@media (max-width: 375px){
+  table{
+    width: 350px;
+  }
+}
+
+@media (max-width: 320px){
+  table{
+    width: 280px;
+  }
+
+  table, th, td {
+    padding: 5px;
   }
 }
