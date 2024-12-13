@@ -5,6 +5,14 @@
   height: 100vh; /* Ubah tinggi menjadi 100% dari viewport height */
 }
 
+body {
+
+  font-family: 'Inter Tight', sans-serif;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+} 
+
 .logoRaster {
   display: block; /* Ensures it takes up its own space */
   margin: 0 auto ; /* Centers the logo horizontally, adds bottom spacing */
