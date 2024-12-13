@@ -720,7 +720,7 @@ export const Mapi = ({ hideComponents }) => {
   const position = [-2.483383, 117.890285];
 
   return (
-    <div className="container">
+    <div className="container" id="map-container">
       <MapContainer
         ref={mapRef}
         center={position}
