@@ -10,7 +10,7 @@ metadata:
 spec:
   containers:
     - name: landing-page
-      image: edosyhtptra/landing-page-petahilir:v0.0.12
+      image: edosyhtptra/landing-page-petahilir:v0.1.1
       ports:
         - containerPort: 3000
     # - name: sidecar-busybox
