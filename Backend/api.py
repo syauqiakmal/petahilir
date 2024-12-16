@@ -51,6 +51,7 @@ app = FastAPI()
 # )
 
 origins = [
+    "*",
     "http://petahilirisasi.id",  # Allow only this origin
     "https://petahilirisasi.id",
     "http://localhost",  # Allow localhost for development
