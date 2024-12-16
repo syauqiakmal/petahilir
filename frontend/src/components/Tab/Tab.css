@@ -257,6 +257,7 @@ bold, b{
 
   .tabs-intro{
     font-size: 12px;
+    width: fit-content;
   }
 
   .tabs-content {
@@ -282,6 +283,7 @@ bold, b{
 
   .tabs-content p {
     font-size: 14px;
+    width: fit-content;
   }
 
   #tabs-image {
@@ -321,6 +323,7 @@ bold, b{
 
   .tabs-content p {
     font-size: 12px;
+    width: fit-content;
   }
 
   ul, li, p{

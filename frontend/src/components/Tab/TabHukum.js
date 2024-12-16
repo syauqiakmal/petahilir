@@ -1,11 +1,180 @@
 import React, { useState } from 'react';
 import './Tab.css';
+import Accordion from "../Accordion/Accordion";
 
 const TabHukum = () => {
   const [activeSubmenu, setActiveSubmenu] = useState(null);
   const [activeTab, setActiveTab] = useState('Menu1');
   const [submenuVisible, setSubmenuVisible] = useState(null);
   const [tabTransition, setTabTransition] = useState(false);
+
+  const accordionData = [
+      {
+        title: "Undang-Undang",
+        description: "Undang-Undang menjadi dasar hukum utama yang mengatur berbagai aspek kegiatan pertambangan, perindustrian, dan tata kelola hilirisasi mineral serta batubara di tingkat nasional.",
+        items: [
+          {
+            no: 1,
+            name: "Undang-Undang Nomor 4 Tahun 2009",
+            description: "Undang-Undang tentang Pertambangan Mineral dan Batubara",
+          },
+          {
+            no: 2,
+            name: "Undang-Undang Nomor 3 Tahun 2014",
+            description: "Perindustrian",
+          },
+          {
+            no: 3,
+            name: "Undang-Undang Nomor 3 Tahun 2020",
+            description: "Perubahan Atas Undang-Undang Nomor 4 Tahun 2009 tentang Pertambangan Mineral dan Batubara",
+          },
+          {
+            no: 4,
+            name: "Undang-Undang Nomor 6 Tahun 2023",
+            description: "Penetapan Peraturan Pemerintah Pengganti Undang-Undang Nomor 2 Tahun 2022 tentang Cipta Kerja Menjadi Undang-Undang",
+          },
+        ],
+      },
+      {
+        title: "Peraturan Pemerintah",
+        description: "Peraturan Pemerintah memberikan arahan lebih teknis terkait perencanaan pembangunan industri, pelaksanaan kegiatan usaha pertambangan, serta perizinan usaha di sektor ini.",
+        items: [
+          {
+            no: 1,
+            name: "Peraturan Pemerintah Nomor 14 Tahun 2015",
+            description: "Rencana Induk Pembangunan Industri Nasional 2015-2035",
+          },
+          {
+            no: 2,
+            name: "Peraturan Pemerintah Nomor 1 Tahun 2017",
+            description:
+              "Perubahan Keempat atas Peraturan Pemerintah Nomor 23 Tahun 2010 tentang Pelaksanaan Kegiatan Usaha Pertambangan Mineral dan Batubara",
+          },
+          {
+            no: 3,
+            name: "Peraturan Pemerintah Nomor 96 Tahun 2021",
+            description: "Pelaksanaan Kegiatan Usaha Pertambangan Mineral dan Batubara",
+          },
+          {
+            no: 4,
+            name: "Peraturan Pemerintah Nomor 25 Tahun 2024",
+            description:
+              "Perubahan Atas Peraturan Pemerintah Nomor 96 Tahun 2021 tentang Pelaksanaan Kegiatan Usaha Pertambangan Mineral dan Batubara",
+          },
+        ],
+      },
+      {
+        title: "Peraturan Menteri",
+        description: "Peraturan Menteri berisi pedoman dan tata cara teknis dalam meningkatkan nilai tambah mineral, mengatur perizinan usaha, serta tata kelola operasional pertambangan mineral dan batubara.",
+        items: [
+          {
+            no: 1,
+            name: "Peraturan Menteri ESDM No. 1 Tahun 2014",
+            description: "Peningkatan Nilai Tambah Mineral Melalui Kegiatan Pengolahan dan Pemurnian Mineral Di Dalam Negeri",
+          },
+          {
+            no: 2,
+            name: "Peraturan Menteri ESDM No. 25 Tahun 2018",
+            description:
+              "Pengusahaan Pertambangan Mineral Dan Batubara",
+          },
+          {
+            no: 3,
+            name: "Peraturan Menteri ESDM No. 11 Tahun 2019",
+            description: "Perubahan Kedua Atas Peraturan Menteri Energi Dan Sumber Daya Mineral Nomor 25 Tahun 2018 Tentang Pengusahaan Pertambangan Mineral Dan Batubara",
+          },
+          {
+            no: 4,
+            name: "Peraturan Menteri ESDM No. 17 Tahun 2020",
+            description:
+              "Perubahan Ketiga Atas Peraturan Menteri Energi dan Sumber Daya Mineral Nomor 25 Tahun 2018 tentang Pengusahaan Pertambangan Mineral dan Batubara",
+          },
+          {
+            no: 5,
+            name: "Peraturan Menteri ESDM No. 16 Tahun 2021",
+            description:
+              "Perubahan Atas Peraturan Menteri Energi dan Sumber Daya Mineral Nomor 7 Tahun 2020 tentang Tata Cara Pemberian Wilayah, Perizinan, dan Pelaporan Pada Kegiatan Usaha Pertambangan Mineral dan Batubara",
+          },
+          {
+            no: 6,
+            name: "Peraturan Menteri ESDM No. 10 Tahun 2023",
+            description: "Tata Cara Penyusunan, Penyampaian, dan Persetujuan Rencana Kerja dan Anggaran Biaya serta Tata Cara Pelaporan Pelaksanaan Kegiatan Usaha Pertambangan Mineral dan Batubara",
+          },
+          {
+            no: 7,
+            name: "Peraturan Menteri Perdagangan No. 119 Tahun 2015",
+            description:
+              "Ketentuan Ekspor Produk Pertambangan Hasil Pengolahan dan Pemurnian",
+          },
+        ],
+      },
+      {
+        title: "Keputusan Menteri",
+        description: "Keputusan Menteri memberikan arahan spesifik terkait pedoman pengajuan izin, evaluasi wilayah tambang, serta penetapan komoditas mineral yang strategis.",
+        items: [
+          {
+            no: 1,
+            name: "Keputusan Menteri ESDM No. 375.K/MB.01/MEM.B/2023",
+            description: "Pedoman Permohonan, Evaluasi, dan Pemrosesan Perluasan Wilayah Izin Usaha Pertambangan dan Wilayah Izin Usaha Pertambangan Khusus Dalam Rangka Konservasi Mineral dan Batu Bara",
+          },
+          {
+            no: 2,
+            name: "Keputusan Menteri ESDM No. 69.K/MB.01/MEM.B/2024",
+            description: "Penetapan Jenis Komoditas yang Tergolong dalam Klasifikasi Mineral Strategis",
+          }
+        ],
+      },
+      {
+        title: "Peraturan Daerah",
+        description: "Peraturan Daerah mengatur tata ruang wilayah, izin usaha pertambangan rakyat, serta upaya perlindungan dan pengelolaan lingkungan hidup di tingkat provinsi dan kabupaten/kota.",
+        items: [
+          {
+            no: 1,
+            name: "Peraturan Daerah Provinsi Kalimantan Selatan Nomor 6 Tahun 2023",
+            description: "Rencana Tata Ruang Wilayah Provinsi Kalimantan Selatan Tahun 2023-2042",
+          },
+          {
+            no: 2,
+            name: "Peraturan Daerah Provinsi Lampung Nomor 12 Tahun 2019",
+            description:
+              "Perubahan Atas Peraturan Daerah 1 Tahun 2010 tentang RTRW Tahun 2009 Sampai Dengan Tahun 2029",
+          },
+          {
+            no: 3,
+            name: "Peraturan Daerah (Perda) Provinsi Sulawesi Selatan Nomor 3 Tahun 2022",
+            description: "Rencana Tata Ruang Wilayah Provinsi Sulawesi Selatan Tahun 2022 - 2041",
+          },
+          {
+            no: 4,
+            name: "Peraturan Daerah (Perda) Kabupaten Bintan Nomor 1 Tahun 2020",
+            description:
+              "Rencana Tata Ruang Wilayah Kabupaten Bintan Tahun 2020 - 2040",
+          },
+          {
+            no: 5,
+            name: "Peraturan Daerah (Perda) Kabupaten Muara Enim Nomor 24 Tahun 2008",
+            description: "Perubahan atas Perda Kab. Muara Enim No.30 Tahun 2001 Tentang Pengusahaan Pertambangan Umum",
+          },
+          {
+            no: 6,
+            name: "Peraturan Daerah Kabupaten Kayong Utara Provinsi Kalimantan Barat Nomor 11 Tahun 2014",
+            description:
+              "Izin Pertambangan Rakyat",
+          },
+          {
+            no: 7,
+            name: "Peraturan Daerah Kabupaten Pasuruan Nomor 7 Tahun 2010",
+            description: "Izin Usaha Pertambangan Mineral dan Batuan di Kabupaten Pasuruan",
+          },
+          {
+            no: 8,
+            name: "Peraturan Daerah (Perda) Kabupaten Banjar Nomor 8 Tahun 2020",
+            description:
+              "Rencana Perlindungan dan Pengelolaan Lingkungan Hidup",
+          },
+        ],
+      },
+    ];
 
   const TabHukum = [
     {
@@ -43,7 +212,7 @@ const TabHukum = () => {
   const ContentHukum = {
     Menu1: {
         title: 'Landasan Hukum Hilirisasi',
-        description: '<table><thead><tr><th>NO</th><th>PERATURAN PERUNDANG-UNDANGAN</th><th>TENTANG</th></tr></thead><tbody><tr><td colspan="3"><b>UNDANG-UNDANG</b></td></tr><tr><td>1</td><td>Undang-Undang Nomor 4 Tahun 2009</td><td>Undang-Undang tentang Pertambangan Mineral dan Batubara</td></tr><tr><td>2</td><td>Undang-Undang Nomor 3 Tahun 2014</td><td>Perindustrian</td></tr><tr><td>3</td><td>Undang-Undang Nomor 3 Tahun 2020</td><td>Perubahan Atas Undang-Undang Nomor 4 Tahun 2009 tentang Pertambangan Mineral dan Batubara</td></tr><tr><td>4</td><td>Undang-Undang Nomor 6 Tahun 2023</td><td>Penetapan Peraturan Pemerintah Pengganti Undang-Undang Nomor 2 Tahun 2022 tentang Cipta Kerja Menjadi Undang-Undang</td></tr><tr><td colspan="3"><b>PERATURAN PEMERINTAH</b></td></tr><tr><td>1</td><td>Peraturan Pemerintah Nomor 14 Tahun 2015</td><td>Rencana Induk Pembangunan Industri Nasional 2015-2035</td></tr><tr><td>2</td><td>Peraturan Pemerintah Nomor 1 Tahun 2017</td><td>Perubahan Keempat atas Peraturan Pemerintah Nomor 23 Tahun 2010 tentang Pelaksanaan Kegiatan Usaha Pertambangan Mineral dan Batubara</td></tr><tr><td>3</td><td>Peraturan Pemerintah Nomor 96 Tahun 2021</td><td>Pelaksanaan Kegiatan Usaha Pertambangan Mineral dan Batubara</td></tr><tr><td>4</td><td>Peraturan Pemerintah Nomor 25 Tahun 2024</td><td>Perubahan Atas Peraturan Pemerintah Nomor 96 Tahun 2021 tentang Pelaksanaan Kegiatan Usaha Pertambangan Mineral dan Batubara</td></tr><tr><td colspan="3"><b>PERATURAN MENTERI</b></td></tr><tr><td>1</td><td>Peraturan Menteri ESDM No. 1 Tahun 2014</td><td>Peningkatan Nilai Tambah Mineral Melalui Kegiatan Pengolahan dan Pemurnian Mineral Di Dalam Negeri</td></tr><tr><td>2</td><td>Peraturan Menteri ESDM No. 25 Tahun 2018</td><td>Pengusahaan Pertambangan Mineral Dan Batubara</td></tr><tr><td>3</td><td>Peraturan Menteri ESDM No. 11 Tahun 2019</td><td>Perubahan Kedua Atas Peraturan Menteri Energi Dan Sumber Daya Mineral Nomor 25 Tahun 2018 Tentang Pengusahaan Pertambangan Mineral Dan Batubara</td></tr><tr><td>4</td><td>Peraturan Menteri ESDM No. 17 Tahun 2020</td><td>Perubahan Ketiga Atas Peraturan Menteri Energi dan Sumber Daya Mineral Nomor 25 Tahun 2018 tentang Pengusahaan Pertambangan Mineral dan Batubara</td></tr><tr><td>5</td><td>Peraturan Menteri ESDM No. 16 Tahun 2021</td><td>Perubahan Atas Peraturan Menteri Energi dan Sumber Daya Mineral Nomor 7 Tahun 2020 tentang Tata Cara Pemberian Wilayah, Perizinan, dan Pelaporan Pada Kegiatan Usaha Pertambangan Mineral dan Batubara</td></tr><tr><td>6</td><td>Peraturan Menteri ESDM No. 10 Tahun 2023</td><td>Tata Cara Penyusunan, Penyampaian, dan Persetujuan Rencana Kerja dan Anggaran Biaya serta Tata Cara Pelaporan Pelaksanaan Kegiatan Usaha Pertambangan Mineral dan Batubara</td></tr><tr><td>7</td><td>Peraturan Menteri Perdagangan No. 119 Tahun 2015</td><td>Ketentuan Ekspor Produk Pertambangan Hasil Pengolahan dan Pemurnian</td></tr><tr><td colspan="3"><b>KEPUTUSAN MENTERI</b></td></tr><tr><td>1</td><td>Keputusan Menteri ESDM No. 375.K/MB.01/MEM.B/2023</td><td>Pedoman Permohonan, Evaluasi, dan Pemrosesan Perluasan Wilayah Izin Usaha Pertambangan dan Wilayah Izin Usaha Pertambangan Khusus Dalam Rangka Konservasi Mineral dan Batu Bara</td></tr><tr><td>2</td><td>Keputusan Menteri ESDM No. 69.K/MB.01/MEM.B/2024</td><td>Penetapan Jenis Komoditas yang Tergolong dalam Klasifikasi Mineral Strategis</td></tr><tr><td colspan="3"><b>PERATURAN DAERAH</b></td></tr><tr><td>1</td><td>Peraturan Daerah Provinsi Kalimantan Selatan Nomor 6 Tahun 2023</td><td>Rencana Tata Ruang Wilayah Provinsi Kalimantan Selatan Tahun 2023-2042</td></tr><tr><td>2</td><td>Peraturan Daerah Provinsi Lampung Nomor 12 Tahun 2019</td><td>Perubahan Atas Peraturan Daerah 1 Tahun 2010 tentang RTRW Tahun 2009 Sampai Dengan Tahun 2029</td></tr><tr><td>3</td><td>Peraturan Daerah (Perda) Provinsi Sulawesi Selatan Nomor 3 Tahun 2022</td><td>Rencana Tata Ruang Wilayah Provinsi Sulawesi Selatan Tahun 2022 - 2041</td></tr><tr><td>4</td><td>Peraturan Daerah (Perda) Kabupaten Bintan Nomor 1 Tahun 2020</td><td>Rencana Tata Ruang Wilayah Kabupaten Bintan Tahun 2020 - 2040</td></tr><tr><td>5</td><td>Peraturan Daerah (Perda) Kabupaten Muara Enim Nomor 24 Tahun 2008</td><td>Perubahan atas Perda Kab. Muara Enim No.30 Tahun 2001 Tentang Pengusahaan Pertambangan Umum</td></tr><tr><td>6</td><td>Peraturan Daerah Kabupaten Kayong Utara Provinsi Kalimantan Barat Nomor 11 Tahun 2014</td><td>Izin Pertambangan Rakyat</td></tr><tr><td>7</td><td>Peraturan Daerah Kabupaten Pasuruan Nomor 7 Tahun 2010</td><td>Izin Usaha Pertambangan Mineral dan Batuan di Kabupaten Pasuruan</td></tr><tr><td>8</td><td>Peraturan Daerah (Perda) Kabupaten Banjar Nomor 8 Tahun 2020</td><td>Rencana Perlindungan dan Pengelolaan Lingkungan Hidup</td></tr></tbody></table>',
+        description: '<p>Bagian ini menyajikan kerangka hukum yang terdiri dari berbagai jenis regulasi yang mendukung kegiatan hilirisasi mineral di Indonesia. Regulasi ini telah dikelompokkan berdasarkan jenisnya, antara lain: <strong>Undang-Undang, Peraturan Pemerintah, Peraturan Menteri, Keputusan Menteri, Peraturan Daerah</strong>.',
     },
     Menu2: {
         title: 'Kebijakasan Hilirisasi Mineral di Berbagai Negara',
@@ -137,49 +306,46 @@ const TabHukum = () => {
         ))}
       </div>
 
-      <div className={`tabs-content ${tabTransition ? 'active' : ''}`}
-        key={activeSubmenu || activeTab}>
-        {activeSubmenu ? (
+      <div className={`tabs-content ${tabTransition ? 'active' : ''}`} key={activeSubmenu || activeTab}>
+  {activeSubmenu ? (
+    <>
+      <h2>{ContentHukum[activeSubmenu].label}</h2>
+      <p>{ContentHukum[activeSubmenu].description}</p>
+    </>
+  ) : (
+    <>
+      <h2>{ContentHukum[activeTab]?.title}</h2>
+
+      <p dangerouslySetInnerHTML={{ __html: ContentHukum[activeTab].description }}></p>
+      
+      {/* Only show Accordion for 'Landasan Hukum Hilirisasi' tab */}
+      {activeTab === 'Menu1' && <Accordion data={accordionData} />}
+      
+      {ContentHukum[activeTab]?.image && (
+        <img
+          src={ContentHukum[activeTab].image}
+          alt={ContentHukum[activeTab]?.label}
+          id="tabs-image-hukum"
+        />
+      )}
+      {ContentHukum[activeTab]?.description2 && (
+        <p dangerouslySetInnerHTML={{ __html: ContentHukum[activeTab].description2 }}></p>
+      )}
+      <div className="referensi">
+        {ContentHukum[activeTab]?.reference && (
           <>
-            <h2>{ContentHukum[activeSubmenu].label}</h2>
-            <p>{ContentHukum[activeSubmenu].description}</p>
-            {ContentHukum[activeSubmenu]?.image && (
-              <img
-                src={ContentHukum[activeSubmenu].image}
-                alt={ContentHukum[activeSubmenu]?.label}
-                id="tabs-image"
-              />
-            )}
-          </>
-        ) : (
-          <>
-            <h2>{ContentHukum[activeTab]?.title}</h2>
-            <p dangerouslySetInnerHTML={{ __html: ContentHukum[activeTab].description }}></p>
-            {ContentHukum[activeTab]?.image && (
-              <img
-                src={ContentHukum[activeTab].image}
-                alt={ContentHukum[activeTab]?.label}
-                id="tabs-image-hukum"
-              />
-            )}
-            {ContentHukum[activeTab]?.description2 && (
-                <p dangerouslySetInnerHTML={{ __html: ContentHukum[activeTab].description2 }}></p>
-            )}
-            <div className="referensi">
-              {ContentHukum[activeTab]?.reference && (
-                <>
-                  <h4>Referensi</h4>
-                  <p
-                    id="ref"
-                    className="ref-penelitian"
-                    dangerouslySetInnerHTML={{ __html: ContentHukum[activeTab].reference }}
-                  />
-                </>
-              )}
-            </div>
+            <h4>Referensi</h4>
+            <p
+              id="ref"
+              className="ref-penelitian"
+              dangerouslySetInnerHTML={{ __html: ContentHukum[activeTab].reference }}
+            />
           </>
         )}
       </div>
+    </>
+  )}
+</div>
     </div>
   );
 };
