@@ -267,7 +267,7 @@ spec:
         - name: regcred # Reference your secret here
       containers:
         - name: landing-page
-          image: edosyhtptra/petahilirisasi-frontend:v0.1.8
+          image: edosyhtptra/petahilirisasi-frontend:v0.1.10
           imagePullPolicy: Always
           # env:
           # - name: APP_URL

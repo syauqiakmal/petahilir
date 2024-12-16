@@ -187,7 +187,7 @@ export const Map = ({ hideComponents }) => {
 
     try {
       // Upload file
-      const uploadResponse = await fetch("http://fastapi.petahilirisasi.svc.cluster.local:8000/upload", {
+      const uploadResponse = await fetch("http://fastapi.peta-hilirisasi.svc.cluster.local:8000/upload", {
         method: "POST",
         body: formData,
       });
@@ -199,7 +199,7 @@ export const Map = ({ hideComponents }) => {
       // Handle zipped shapefile
       if (file.name.endsWith(".zip")) {
         const dataResponse = await fetch(
-          `http://fastapi.petahilirisasi.svc.cluster.local:8000/data/${tableName}`
+          `http://fastapi.peta-hilirisasi.svc.cluster.local:8000/data/${tableName}`
         );
         if (!dataResponse.ok) {
           throw new Error("Failed to fetch shapefile data");
@@ -229,7 +229,7 @@ export const Map = ({ hideComponents }) => {
       // Handle raster file
       else if (file.name.endsWith(".tif") || file.name.endsWith(".tiff")) {
         const dataResponse = await fetch(
-          `http://fastapi.petahilirisasi.svc.cluster.local:8000/raster/${tableName}`
+          `http://fastapi.peta-hilirisasi.svc.cluster.local:8000/raster/${tableName}`
         );
         if (!dataResponse.ok) {
           throw new Error("Failed to fetch raster data");
@@ -268,7 +268,7 @@ export const Map = ({ hideComponents }) => {
       // Handle geojson file
       else if (file.name.endsWith(".geojson")) {
         const dataResponse = await fetch(
-          `http://fastapi.petahilirisasi.svc.cluster.local:8000/geojson/${tableName}`
+          `http://fastapi.peta-hilirisasi.svc.cluster.local:8000/geojson/${tableName}`
         );
         if (!dataResponse.ok) {
           throw new Error(
@@ -425,7 +425,7 @@ export const Map = ({ hideComponents }) => {
     const fetchRaster = async () => {
       try {
         const response = await fetch(
-          `http://fastapi.petahilirisasi.svc.cluster.local:8000/raster1/`
+          `http://fastapi.peta-hilirisasi.svc.cluster.local:8000/raster1/`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch raster data");
@@ -478,7 +478,7 @@ export const Map = ({ hideComponents }) => {
     const fetchRaster = async () => {
       try {
         const response = await fetch(
-          `http://fastapi.petahilirisasi.svc.cluster.local:8000/rasterNikelA/`
+          `http://fastapi.peta-hilirisasi.svc.cluster.local:8000/rasterNikelA/`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch raster data");
@@ -531,7 +531,7 @@ export const Map = ({ hideComponents }) => {
     const fetchRaster = async () => {
       try {
         const response = await fetch(
-          `http://fastapi.petahilirisasi.svc.cluster.local:8000/rasterNikelB/`
+          `http://fastapi.peta-hilirisasi.svc.cluster.local:8000/rasterNikelB/`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch raster data");
@@ -585,7 +585,7 @@ export const Map = ({ hideComponents }) => {
     const fetchRaster = async () => {
       try {
         const response = await fetch(
-          `http://fastapi.petahilirisasi.svc.cluster.local:8000/rasterNikelC/`
+          `http://fastapi.peta-hilirisasi.svc.cluster.local:8000/rasterNikelC/`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch raster data");
@@ -639,7 +639,7 @@ export const Map = ({ hideComponents }) => {
     const fetchRaster = async () => {
       try {
         const response = await fetch(
-          `http://fastapi.petahilirisasi.svc.cluster.local:8000/rasterNikelD/`
+          `http://fastapi.peta-hilirisasi.svc.cluster.local:8000/rasterNikelD/`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch raster data");
@@ -693,7 +693,7 @@ export const Map = ({ hideComponents }) => {
     const fetchRaster = async () => {
       try {
         const response = await fetch(
-          `http://fastapi.petahilirisasi.svc.cluster.local:8000/rasterNikelE/`
+          `http://fastapi.peta-hilirisasi.svc.cluster.local:8000/rasterNikelE/`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch raster data");
