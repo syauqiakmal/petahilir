@@ -457,7 +457,7 @@ async def get_data(table_name: str):
         print("Error:", e)
         raise HTTPException(status_code=500, detail="Internal Server Error")
 
-
+#hello
 color_palette = [
     "609C60", "609C60", "5C985C", "589558", "549254", "508E50", "4C8B4C", "488848", "448544", "408140", 
     "3C7E3C", "387B38", "347834", "317431", "2D712D", "296E29", "256B25", "216721", "1D641D", "196119", 
