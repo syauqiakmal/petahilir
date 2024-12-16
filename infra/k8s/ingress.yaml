@@ -30,6 +30,13 @@ spec:
                 name: landing-page # must be in same namespace
                 port:
                   number: 80 # port of service
+          - path: /map
+            pathType: Prefix
+            backend:
+              service:
+                name: fastapi
+                port:
+                  number: 80
   tls:
     - hosts:
         - petahilirisasi.id
