@@ -40,7 +40,21 @@ app = FastAPI()
 
 
 
-origins = "*"
+# origins = "*"
+
+# app.add_middleware(
+#     CORSMiddleware,
+#     allow_origins=origins,
+#     allow_credentials=True,
+#     allow_methods=["GET", "POST"],
+#     allow_headers=["*"],
+# )
+
+origins = [
+    "http://petahilirisasi.id",  # Allow only this origin
+    "https://petahilirisasi.id"
+    "http://localhost",  # Allow localhost for development
+]
 
 app.add_middleware(
     CORSMiddleware,
