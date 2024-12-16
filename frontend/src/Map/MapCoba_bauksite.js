@@ -176,7 +176,7 @@ export const Mapi = ({ hideComponents }) => {
 
     try {
       // Upload file
-      const uploadResponse = await fetch("http://localhost:8000/upload", {
+      const uploadResponse = await fetch("http://fastapi.peta-hilirisasi.svc.cluster.local:8000/upload", {
         method: "POST",
         body: formData,
       });
@@ -188,7 +188,7 @@ export const Mapi = ({ hideComponents }) => {
       // Handle zipped shapefile
       if (file.name.endsWith(".zip")) {
         const dataResponse = await fetch(
-          `http://localhost:8000/data/${tableName}`
+          `http://fastapi.peta-hilirisasi.svc.cluster.local:8000/data/${tableName}`
         );
         if (!dataResponse.ok) {
           throw new Error("Failed to fetch shapefile data");
@@ -218,7 +218,7 @@ export const Mapi = ({ hideComponents }) => {
       // Handle raster file
       else if (file.name.endsWith(".tif") || file.name.endsWith(".tiff")) {
         const dataResponse = await fetch(
-          `http://localhost:8000/raster/${tableName}`
+          `http://fastapi.peta-hilirisasi.svc.cluster.local:8000/raster/${tableName}`
         );
         if (!dataResponse.ok) {
           throw new Error("Failed to fetch raster data");
@@ -257,7 +257,7 @@ export const Mapi = ({ hideComponents }) => {
       // Handle geojson file
       else if (file.name.endsWith(".geojson")) {
         const dataResponse = await fetch(
-          `http://localhost:8000/geojson/${tableName}`
+          `http://fastapi.peta-hilirisasi.svc.cluster.local:8000/geojson/${tableName}`
         );
         if (!dataResponse.ok) {
           throw new Error(
@@ -304,7 +304,7 @@ export const Mapi = ({ hideComponents }) => {
   //   const fetchData = async () => {
   //     try {
   //       const dataResponse = await fetch(
-  //         `http://localhost:8000/data/Blok Tambang`
+  //         `http://fastapi.peta-hilirisasi.svc.cluster.local:8000/data/Blok Tambang`
   //       );
   //       if (!dataResponse.ok) {
   //         throw new Error("Failed to fetch shapefile data");
@@ -338,7 +338,7 @@ export const Mapi = ({ hideComponents }) => {
     const fetchRaster = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8000/raster2/`
+          `http://fastapi.peta-hilirisasi.svc.cluster.local:8000/raster2/`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch raster data");
@@ -396,7 +396,7 @@ export const Mapi = ({ hideComponents }) => {
     const fetchRaster = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8000/rasterkuarsaA/`
+          `http://fastapi.peta-hilirisasi.svc.cluster.local:8000/rasterkuarsaA/`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch raster data");
@@ -449,7 +449,7 @@ export const Mapi = ({ hideComponents }) => {
     const fetchRaster = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8000/rasterkuarsaB/`
+          `http://fastapi.peta-hilirisasi.svc.cluster.local:8000/rasterkuarsaB/`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch raster data");
@@ -503,7 +503,7 @@ export const Mapi = ({ hideComponents }) => {
     const fetchRaster = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8000/rasterkuarsaC/`
+          `http://fastapi.peta-hilirisasi.svc.cluster.local:8000/rasterkuarsaC/`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch raster data");
@@ -557,7 +557,7 @@ export const Mapi = ({ hideComponents }) => {
     const fetchRaster = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8000/rasterkuarsaD/`
+          `http://fastapi.peta-hilirisasi.svc.cluster.local:8000/rasterkuarsaD/`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch raster data");
