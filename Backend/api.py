@@ -594,83 +594,83 @@ async def get_geojson(table_name: str):
     
 @app.get("/raster1/")
 async def get_raster1():
-    return await process_raster_file(r"Backend/data/image_export_mchange_geometrynikel.tiff")
+    return await process_raster_file(r"data/image_export_mchange_geometrynikel.tiff")
 
 @app.get("/rasterNikelA/")
 async def get_raster1():
-    return await process_raster_file(r"Backend/data/image_export_m00_geometrynikel.tif")
+    return await process_raster_file(r"data/image_export_m00_geometrynikel.tif")
 
 @app.get("/rasterNikelB/")
 async def get_raster1():
-    return await process_raster_file(r"Backend/data/image_export_m05_geometrynikel.tif")
+    return await process_raster_file(r"data/image_export_m05_geometrynikel.tif")
 
 @app.get("/rasterNikelC/")
 async def get_raster1():
-    return await process_raster_file(r"Backend/data/image_export_m10_geometrynikel.tif")
+    return await process_raster_file(r"data/image_export_m10_geometrynikel.tif")
 
 @app.get("/rasterNikelD/")
 async def get_raster1():
-    return await process_raster_file(r"Backend/data/image_export_m15_geometrynikel.tif")
+    return await process_raster_file(r"data/image_export_m15_geometrynikel.tif")
 @app.get("/rasterNikelE/")
 async def get_raster1():
-    return await process_raster_file(r"Backend/data/image_export_m20_geometrynikel.tif")
+    return await process_raster_file(r"data/image_export_m20_geometrynikel.tif")
 
 
 
 
 @app.get("/raster2/")
 async def get_raster1():
-    return await process_raster_file(r"Backend/data/image_export_mchange_geometrykuarsa.tif")
+    return await process_raster_file(r"data/image_export_mchange_geometrykuarsa.tif")
 
 
 @app.get("/rasterkuarsaA/")
 async def get_raster1():
-    return await process_raster_file(r"Backend/data/image_export_m00_geometrykuarsa.tif")
+    return await process_raster_file(r"data/image_export_m00_geometrykuarsa.tif")
 
 @app.get("/rasterkuarsaB/")
 async def get_raster1():
-    return await process_raster_file(r"Backend/data/image_export_m05_geometrykuarsa.tif")
+    return await process_raster_file(r"data/image_export_m05_geometrykuarsa.tif")
 
 @app.get("/rasterkuarsaC/")
 async def get_raster1():
-    return await process_raster_file(r"Backend/data/image_export_m10_geometrykuarsa.tif")
+    return await process_raster_file(r"data/image_export_m10_geometrykuarsa.tif")
 
 @app.get("/rasterkuarsaD/")
 async def get_raster1():
-    return await process_raster_file(r"Backend/data/image_export_m15_geometrykuarsa.tif")
+    return await process_raster_file(r"data/image_export_m15_geometrykuarsa.tif")
 @app.get("/rasterkuarsaE/")
 async def get_raster1():
-    return await process_raster_file(r"Backend/data/image_export_m20_geometrykuarsa.tif")
+    return await process_raster_file(r"data/image_export_m20_geometrykuarsa.tif")
 
 
 
 @app.get("/raster3/")
 async def get_raster1():
-    return await process_raster_file(r"Backend/data/image_export_mchange_geometrybauksit.tif")
+    return await process_raster_file(r"data/image_export_mchange_geometrybauksit.tif")
 
 @app.get("/rasterbauksitA/")
 async def get_raster1():
-    return await process_raster_file(r"Backend/data/image_export_m00_geometrybauksit.tif")
+    return await process_raster_file(r"data/image_export_m00_geometrybauksit.tif")
 
 @app.get("/rasterbauksitB/")
 async def get_raster1():
-    return await process_raster_file(r"Backend/data/image_export_m05_geometrybauksit.tif")
+    return await process_raster_file(r"data/image_export_m05_geometrybauksit.tif")
 
 @app.get("/rasterbauksitC/")
 async def get_raster1():
-    return await process_raster_file(r"Backend/data/image_export_m10_geometrybauksit.tif")
+    return await process_raster_file(r"data/image_export_m10_geometrybauksit.tif")
 
 @app.get("/rasterbauksitD/")
 async def get_raster1():
-    return await process_raster_file(r"Backend/data/image_export_m15_geometrybauksit.tif")
+    return await process_raster_file(r"data/image_export_m15_geometrybauksit.tif")
 @app.get("/rasterbauksitE/")
 async def get_raster1():
-    return await process_raster_file(r"Backend/data/image_export_m20_geometrybauksit.tif")
+    return await process_raster_file(r"data/image_export_m20_geometrybauksit.tif")
 
 
 @app.get("/shapefile/")
 async def get_shapefile():
-    zip_path = r"Backend/data/world-administrative-boundaries.zip"  # Ganti dengan path ke file .zip Anda
+    zip_path = r"data/world-administrative-boundaries.zip"  # Ganti dengan path ke file .zip Anda
     feature_collection = process_shapefile(zip_path)
     return await feature_collection
 
