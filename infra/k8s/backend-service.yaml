@@ -1,0 +1,18 @@
+# kubectl -n peta-hilirisasi apply -f service.yaml
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fastapi
+  labels:
+    app: fastapi
+spec:
+  selector:
+    app: fastapi
+    tier: backend
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 80 # port of the service
+      targetPort: 8000 # port of the application/pod
+

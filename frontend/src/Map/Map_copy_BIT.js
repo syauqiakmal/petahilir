@@ -187,7 +187,7 @@ export const Map = ({ hideComponents }) => {
 
     try {
       // Upload file
-      const uploadResponse = await fetch("http://localhost:8000/upload", {
+      const uploadResponse = await fetch("https://petahilirisasi.id/map/upload", {
         method: "POST",
         body: formData,
       });
@@ -199,7 +199,7 @@ export const Map = ({ hideComponents }) => {
       // Handle zipped shapefile
       if (file.name.endsWith(".zip")) {
         const dataResponse = await fetch(
-          `http://localhost:8000/data/${tableName}`
+          `https://petahilirisasi.id/map/data/${tableName}`
         );
         if (!dataResponse.ok) {
           throw new Error("Failed to fetch shapefile data");
@@ -229,7 +229,7 @@ export const Map = ({ hideComponents }) => {
       // Handle raster file
       else if (file.name.endsWith(".tif") || file.name.endsWith(".tiff")) {
         const dataResponse = await fetch(
-          `http://localhost:8000/raster/${tableName}`
+          `https://petahilirisasi.id/map/raster/${tableName}`
         );
         if (!dataResponse.ok) {
           throw new Error("Failed to fetch raster data");
@@ -268,7 +268,7 @@ export const Map = ({ hideComponents }) => {
       // Handle geojson file
       else if (file.name.endsWith(".geojson")) {
         const dataResponse = await fetch(
-          `http://localhost:8000/geojson/${tableName}`
+          `https://petahilirisasi.id/map/geojson/${tableName}`
         );
         if (!dataResponse.ok) {
           throw new Error(
@@ -425,7 +425,7 @@ export const Map = ({ hideComponents }) => {
     const fetchAllData = async () => {
       try {
         // Fetch GeoJSON data from a single shapefile endpoint
-        const response = await fetch("http://localhost:8000/shapefile");
+        const response = await fetch("https://petahilirisasi.id/map/shapefile");
         const geojsonData = await response.json();
   
         // Prepare the files data

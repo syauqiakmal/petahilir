@@ -247,27 +247,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: landing-page
+  name: fastapi
   namespace: peta-hilirisasi # Ensure this is the correct namespace
   labels:
-    app: landing-page
+    app: fastapi
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: landing-page
-      tier: frontend
+      app: fastapi
+      tier: backend
   template:
     metadata:
       labels:
-        app: landing-page
-        tier: frontend
+        app: fastapi
+        tier: backend
     spec:
       imagePullSecrets:
         - name: regcred # Reference your secret here
       containers:
-        - name: landing-page
-          image: edosyhtptra/petahilirisasi-frontend:v0.1.12
+        - name: fastapi
+          image: edosyhtptra/petahilirisasi-backend:v0.0.5
           imagePullPolicy: Always
           # env:
           # - name: APP_URL
