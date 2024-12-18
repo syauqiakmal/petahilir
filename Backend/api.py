@@ -19,8 +19,7 @@ from pyproj import CRS, Transformer
 import rasterio
 from shapely.ops import transform
 import numpy as np
-from starlette.middleware.trustedhost import TrustedHostMiddleware
-from starlette.middleware.httpsredirect import HTTPSRedirectMiddleware
+from fastapi.middleware.httpsredirect import HTTPSRedirectMiddleware
 
 import matplotlib.colors as mcolors
 from rasterio.enums import Resampling
@@ -58,7 +57,7 @@ origins = [
     "https://petahilirisasi.id",
     "http://localhost",  # Allow localhost for development
 ]
-app.add_middleware(HTTPSRedirectMiddleware)
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -66,6 +65,7 @@ app.add_middleware(
     allow_methods=["GET", "POST"],
     allow_headers=["*"],
 )
+app.add_middleware(HTTPSRedirectMiddleware)
 
 MAX_UPLOAD_SIZE = 100 * 1024 * 1024  # 100MB
 
