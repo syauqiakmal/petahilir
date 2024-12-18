@@ -65,7 +65,6 @@ app.add_middleware(
     allow_methods=["GET", "POST"],
     allow_headers=["*"],
 )
-app.add_middleware(HTTPSRedirectMiddleware)
 
 MAX_UPLOAD_SIZE = 100 * 1024 * 1024  # 100MB
 
