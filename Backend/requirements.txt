@@ -10,3 +10,4 @@ geopandas==1.0.1
 python-multipart==0.0.12
 uvicorn==0.31.0
 pillow==10.4.0
+starlette-context
