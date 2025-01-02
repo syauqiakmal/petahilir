@@ -21,8 +21,8 @@ const AboutPage = () => {
                     <HeroPage
                         videoSrc={HeroBackground}
                         overlayImage={overlayImage}
-                        title="Peta Hilirisasii"
-                        subtitle="About Us"
+                        title="Peta Hilirisasi"
+                        subtitle="About Uss"
                         description=""
                     />
                 </section>
